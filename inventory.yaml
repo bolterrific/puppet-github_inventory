@@ -1,0 +1,19 @@
+version: 2
+
+config:
+  transport: local
+  local:
+    interpreters:
+      .rb: /opt/puppetlabs/bolt/bin/ruby
+    tmpdir:
+     _plugin: env_var
+     var: PWD
+
+groups:
+  - name: repo_targets
+    targets:
+      - _plugin: github_org
+        org: simp
+        github_api_token:
+          _plugin: env_var
+          var: GITHUB_API_TOKEN

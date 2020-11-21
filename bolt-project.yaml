@@ -1,0 +1,8 @@
+---
+name: github_org
+modules:
+  - nwops-debug
+  - git: 'https://github.com/voxpupuli/puppet-format.git'
+    ref: master
+modulepath:
+  - '..'
