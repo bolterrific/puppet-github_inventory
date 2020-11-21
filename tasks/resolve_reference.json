@@ -25,7 +25,6 @@
     }
   },
   "files": [
-    "github_org/files/github_helpers.rb",
     "ruby_plugin_helper/lib/plugin_helper.rb",
     "ruby_task_helper/files/task_helper.rb"
   ]

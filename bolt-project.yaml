@@ -1,8 +1,20 @@
 ---
-name: github_org
+name: github_inventory
+
+plans:
+  - 'github_inventory'
+  - 'github_inventory::*'
+
+tasks:
+  - 'github_inventory'
+  - 'github_inventory::*'
+
 modules:
   - nwops-debug
   - git: 'https://github.com/voxpupuli/puppet-format.git'
-    ref: master
+    ref: v0.1.1
+
+# Hack to permit this project to load its own plugin
 modulepath:
   - '..'
+

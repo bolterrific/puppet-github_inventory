@@ -12,7 +12,7 @@ config:
 groups:
   - name: repo_targets
     targets:
-      - _plugin: github_org
+      - _plugin: github_inventory
         org: simp
         github_api_token:
           _plugin: env_var
