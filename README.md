@@ -1,9 +1,5 @@
 # github_inventory
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/docs/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
-
 #### Table of Contents
 
 1. [Description](#description)
@@ -35,8 +31,31 @@ If there's more that they should know about, though, this is the place to mentio
 
 * [Puppet Bolt 2.15+][bolt], installed from an [OS package][bolt-install] (don't use the RubyGem)
 * A GitHub API personal auth token with sufficient scope
+* The [`octokit` RubyGem][octokit-rb]
 
 ### Beginning with github_inventory
+
+1. If you are using [rvm], you **must disable it** before running bolt:
+
+   ```sh
+   rvm use system
+   ```
+
+2. Install the RubyGem deps using Bolt's `gem` command
+
+   On most platforms:
+
+   ```sh
+   /opt/puppetlabs/bolt/bin/gem install --user-install -g gem.deps.rb
+   ```
+
+   On Windows:
+
+   ```pwsh
+   "C:/Program Files/Puppet Labs/Bolt/bin/gem.bat" install --user-install -g gem.deps.rb
+   ```
+
+3. (If using the example Bolt plans in this module)
 
 The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
 
@@ -82,3 +101,8 @@ In the Development section, tell other users the ground rules for contributing t
 ## Release Notes/Contributors/Etc. **Optional**
 
 If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+
+[octokit-rb]: https://github.com/octokit/octokit.rb
+[bolt]: https://puppet.com/docs/bolt/latest/bolt.html
+[bolt-install]: https://puppet.com/docs/bolt/latest/bolt_installing.html
+[rvm]: https://rvm.io
