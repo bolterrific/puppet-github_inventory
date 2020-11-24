@@ -2,18 +2,28 @@
 
 #### Table of Contents
 
-1. [Description](#description)
-2. [Setup - The basics of getting started with github_inventory](#setup)
-    * [What github_inventory affects](#what-github_inventory-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with github_inventory](#beginning-with-github_inventory)
-3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for contributing to the module](#development)
+<!-- vim-markdown-toc GFM -->
+
+* [Description](#description)
+* [Setup](#setup)
+  * [Setup Requirements](#setup-requirements)
+* [Usage](#usage)
+  * [Using the plugin in a Bolt inventory file](#using-the-plugin-in-a-bolt-inventory-file)
+* [Reference](#reference)
+* [Limitations](#limitations)
+* [Development](#development)
+
+<!-- vim-markdown-toc -->
 
 ## Description
 
-This module includes a Bolt plugin to generate `local` Transport Targets from a GitHub org's repositories.
+**github_inventory** is an [inventory reference plugin] for [Puppet
+Bolt]. It uses the GitHub API to dynamically provide a list of [`local`
+transport] Targets that represent each repository under a GitHub org.
+
+This module also contains an example bolt project to demonstrate how to the
+plugin to provide inventory for the Bolt plan
+`github_inventory::required_checks`.
 
 ## Setup
 
@@ -61,34 +71,42 @@ The very basic steps needed for a user to get the module up and running. This ca
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+To use this plugin in your own Bolt project, configure it to provide `targets`
+in the [inventory file].
+
+### Using the plugin in a Bolt inventory file
+
+An example `inventory.yaml` file:
+
+```yaml
+version: 2
+
+groups:
+  - name: repo_targets
+    targets:
+      - _plugin: github_inventory  # <- Plugin provides `local` Targets
+        org: simp                  # <- GitHub org with Target repos
+        github_api_token:          # <- API token with scope that can get repos
+          _plugin: env_var         # <- (provided by another Bolt plugin)
+          var: GITHUB_API_TOKEN
+
+config:
+  transport: local
+  local:
+    interpreters:
+      .rb: /opt/puppetlabs/bolt/bin/ruby
+    tmpdir:
+     _plugin: env_var
+     var: PWD
+
+```
+
+
 
 ## Reference
 
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
+See [REFERENCE.md](./REFERENCE.md)
 
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
 
 ## Limitations
 
@@ -98,11 +116,11 @@ In the Limitations section, list any incompatibilities, known issues, or other w
 
 In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
 
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
-
-[octokit-rb]: https://github.com/octokit/octokit.rb
 [bolt]: https://puppet.com/docs/bolt/latest/bolt.html
 [bolt-install]: https://puppet.com/docs/bolt/latest/bolt_installing.html
+[inventory file]: https://puppet.com/docs/bolt/latest/inventory_file_v2.html
+[inventory reference plugin]: https://puppet.com/docs/bolt/latest/using_plugins.html#reference-plugins
+[`local` transport]: https://puppet.com/docs/bolt/latest/bolt_transports_reference.html#local
+[octokit-rb]: https://github.com/octokit/octokit.rb
+[Puppet Bolt]: https://puppet.com/docs/bolt/latest/bolt.html
 [rvm]: https://rvm.io

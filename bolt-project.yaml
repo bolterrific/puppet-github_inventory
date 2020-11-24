@@ -10,11 +10,11 @@ tasks:
   - 'github_inventory::*'
 
 modules:
-  - nwops-debug
   - git: 'https://github.com/voxpupuli/puppet-format.git'
     ref: v0.1.1
+  - nwops-debug
 
-# Hack to permit this project to load its own plugin
+# Hack to permit this module to act as a bolt project and load its own plugin
 modulepath:
   - '..'
 
