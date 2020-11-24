@@ -13,7 +13,6 @@ class GithubOrg < TaskHelper
     Dir["#{kwargs[:extra_gem_path]}/gems/*/lib"].each { |path| $LOAD_PATH << path } # for octokit
 
     org  = kwargs[:org]
-    user = (org =~ /^user:/) ? org.split(/^user:/).last : nil
 
     github_api_token = kwargs[:github_api_token]
 
@@ -26,8 +25,9 @@ class GithubOrg < TaskHelper
       }
     )
 
-    if user
-      repos = @client.repositories(user)
+    user = @client.user( org )
+    if user['type'] == 'User'
+      repos = @client.repositories(org)
     else
       repos = @client.org_repos(org)
     end
