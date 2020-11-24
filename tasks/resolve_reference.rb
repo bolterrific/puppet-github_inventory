@@ -12,7 +12,9 @@ class GithubOrg < TaskHelper
   def task(name: nil, **kwargs)
     Dir["#{kwargs[:extra_gem_path]}/gems/*/lib"].each { |path| $LOAD_PATH << path } # for octokit
 
-    org              = kwargs[:org]
+    org  = kwargs[:org]
+    user = (org =~ /^user:/) ? org.split(/^user:/).last : nil
+
     github_api_token = kwargs[:github_api_token]
 
     require 'octokit'
@@ -23,7 +25,12 @@ class GithubOrg < TaskHelper
         headers: ['application/vnd.github.luke-cage-preview+json']
       }
     )
-    repos = @client.org_repos(org)
+
+    if user
+      repos = @client.repositories(user)
+    else
+      repos = @client.org_repos(org)
+    end
 
     ## TODO: reject block_listed repos/patterns
 
