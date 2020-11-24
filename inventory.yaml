@@ -13,7 +13,10 @@ groups:
   - name: repo_targets
     targets:
       - _plugin: github_inventory
-        org: simp
+        org:
+          _plugin: env_var
+          var: GITHUB_ORG
+          default: simp
         github_api_token:
           _plugin: env_var
           var: GITHUB_API_TOKEN
