@@ -25,14 +25,13 @@ class GithubOrg < TaskHelper
       }
     )
 
-    user = @client.user( org )
-    if user['type'] == 'User'
+    if @client.user( org )['type'] == 'User'
       repos = @client.repositories(org)
     else
       repos = @client.org_repos(org)
     end
 
-    ## TODO: reject block_listed repos/patterns
+    ## TODO: reject block_listed repos/patterns?
 
     targets = repos.map do |repo|
       # FIXME: handle interpreters for non-linux OSes
