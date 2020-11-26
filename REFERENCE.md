@@ -68,7 +68,7 @@ The following parameters are available in the `github_inventory` plan.
 
 Data type: `TargetSpec`
 
-
+By default: `repo_targets` group from inventory
 
 Default value: `get_targets('repo_targets')`
 
@@ -76,7 +76,7 @@ Default value: `get_targets('repo_targets')`
 
 Data type: `String[1]`
 
-
+GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
 
 Default value: `system::env('GITHUB_API_TOKEN')`
 
@@ -92,7 +92,7 @@ The following parameters are available in the `github_inventory::required_checks
 
 Data type: `TargetSpec`
 
-
+By default: `repo_targets` group from inventory
 
 Default value: `get_targets('repo_targets')`
 
@@ -125,7 +125,7 @@ The following parameters are available in the `github_inventory::workflows` plan
 
 Data type: `TargetSpec`
 
-
+By default: `repo_targets` group from inventory
 
 Default value: `get_targets('repo_targets')`
 
@@ -133,7 +133,7 @@ Default value: `get_targets('repo_targets')`
 
 Data type: `Sensitive[String[1]]`
 
-
+GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
 
 Default value: `(system::env('GITHUB_API_TOKEN'))`
 

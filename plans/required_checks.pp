@@ -1,6 +1,7 @@
 # List and/or set which PR checks are required on each repo
 #
 # @param targets
+#    By default: `repo_targets` group from inventory
 #
 # @param github_api_token
 #    GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
@@ -8,6 +9,7 @@
 # @param checks
 #    Optional comma-delimited list of required PR Checks to set on all repos
 #    If defined, this will overwrite ALL repos' required PR checks
+#
 plan github_inventory::required_checks(
   TargetSpec           $targets = get_targets('repo_targets'),
   Sensitive[String[1]] $github_api_token = Sensitive.new(system::env('GITHUB_API_TOKEN')),
