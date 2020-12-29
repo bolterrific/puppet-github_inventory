@@ -7,8 +7,9 @@
 #    GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
 #
 plan github_inventory(
-  TargetSpec $targets = get_targets('repo_targets'),
+  TargetSpec $targets = 'repo_targets',
   String[1]  $github_api_token = system::env('GITHUB_API_TOKEN'),
 ){
+  $repo_targets = get_targets($targets),
   out::message( "Repos: ${targets.size}" )
 }

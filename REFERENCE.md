@@ -10,7 +10,7 @@
 
 ### Plans
 
-* [`github_inventory`](#github_inventory): Example plan, prints number of Targets from inventory
+* [`github_inventory::latest_semver_tags`](#github_inventorylatest_semver_tags): Report the highest SemVer tag for each repo (that has SemVer tags)
 * [`github_inventory::required_checks`](#github_inventoryrequired_checks): List and/or set which PR checks are required on each repo
 * [`github_inventory::workflows`](#github_inventoryworkflows): Return repos with GitHub Actions workflows
 
@@ -28,7 +28,7 @@ Return a GitHub organization's repositories as local inventory targets
 
 Data type: `String[1]`
 
-GitHub org name to inventory
+GitHub org name (or user login) with repos
 
 ##### `github_api_token`
 
@@ -36,17 +36,35 @@ Data type: `Optional[String[1]]`
 
 Optional GitHub personal OAuth token, which may be useful to avoid the GitHub API's unauthenticated rate limits
 
+##### `archived_repos`
+
+Data type: `Boolean`
+
+When true, includes archived repositories in results.
+
+##### `private_repos`
+
+Data type: `Boolean`
+
+When true, includes private repositories in results.
+
 ##### `allow_list`
 
 Data type: `Optional[Array[String[1]]]`
 
-repo names/patterns to include in inventory
+repo names/patterns to include in inventory, drops all other repos
 
 ##### `block_list`
 
 Data type: `Optional[Array[String[1]]]`
 
-repo names/patterns to reject from inventory (can reject targets included by allow_list)
+repo names/patterns to reject from inventory (can reject targets in allow_list)
+
+##### `transport_type`
+
+Data type: `String[1]`
+
+Bolt Transport type of repository Targets
 
 ##### `extra_gem_path`
 
@@ -56,13 +74,15 @@ Additional GEM_PATH path for ruby gems (to find `octokit`)
 
 ## Plans
 
-### `github_inventory`
+### `github_inventory::latest_semver_tags`
 
-Example plan, prints number of Targets from inventory
+Report the highest SemVer tag for each repo (that has SemVer tags)
+
+* **Note** ONLY reports repos with SemVer tags (ignores `/^v/` and `/-d$/`)
 
 #### Parameters
 
-The following parameters are available in the `github_inventory` plan.
+The following parameters are available in the `github_inventory::latest_semver_tags` plan.
 
 ##### `targets`
 
@@ -70,15 +90,15 @@ Data type: `TargetSpec`
 
 By default: `repo_targets` group from inventory
 
-Default value: `get_targets('repo_targets')`
+Default value: `'repo_targets'`
 
 ##### `github_api_token`
 
-Data type: `String[1]`
+Data type: `Sensitive[String[1]]`
 
 GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
 
-Default value: `system::env('GITHUB_API_TOKEN')`
+Default value: `(system::env('GITHUB_API_TOKEN'))`
 
 ### `github_inventory::required_checks`
 

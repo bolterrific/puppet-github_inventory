@@ -7,6 +7,7 @@
 * [Description](#description)
 * [Setup](#setup)
   * [Setup Requirements](#setup-requirements)
+  * [Beginning with github_inventory](#beginning-with-github_inventory)
 * [Usage](#usage)
   * [Using the plugin in a Bolt inventory file](#using-the-plugin-in-a-bolt-inventory-file)
 * [Reference](#reference)
@@ -21,25 +22,15 @@
 Bolt]. It uses the GitHub API to dynamically provide a list of [`local`
 transport] Targets that represent each repository under a GitHub org.
 
-This module also contains an example bolt project to demonstrate how to the
-plugin to provide inventory for the Bolt plan
-`github_inventory::required_checks`.
+This module also contains an example Bolt project with a working
+`inventory.yaml` and several Bolt plans.
 
 ## Setup
-
-### What github_inventory affects **OPTIONAL**
-
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
-
-If there's more that they should know about, though, this is the place to mention:
-
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
 
 ### Setup Requirements
 
 * [Puppet Bolt 2.15+][bolt], installed from an [OS package][bolt-install] (don't use the RubyGem)
+  * **Note:** The example `inventory.yaml` assumes Bolt 2.37+ (see comments)
 * A GitHub API personal auth token with sufficient scope
 * The [`octokit` RubyGem][octokit-rb]
 
@@ -51,7 +42,7 @@ If there's more that they should know about, though, this is the place to mentio
    rvm use system
    ```
 
-2. Install the RubyGem deps using Bolt's `gem` command
+2. Install the RubyGem dependencies using Bolt's `gem` command
 
    On most platforms:
 
@@ -66,8 +57,6 @@ If there's more that they should know about, though, this is the place to mentio
    ```
 
 3. (If using the example Bolt plans in this module)
-
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
 
 ## Usage
 
@@ -101,8 +90,6 @@ config:
 
 ```
 
-
-
 ## Reference
 
 See [REFERENCE.md](./REFERENCE.md)
@@ -110,11 +97,11 @@ See [REFERENCE.md](./REFERENCE.md)
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+FIXME In the Limitations section, list any incompatibilities, known issues, or other warnings.
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
+FIXME In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
 
 [bolt]: https://puppet.com/docs/bolt/latest/bolt.html
 [bolt-install]: https://puppet.com/docs/bolt/latest/bolt_installing.html

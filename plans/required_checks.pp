@@ -11,10 +11,11 @@
 #    If defined, this will overwrite ALL repos' required PR checks
 #
 plan github_inventory::required_checks(
-  TargetSpec           $targets = get_targets('repo_targets'),
+  TargetSpec           $targets = 'repo_targets',
   Sensitive[String[1]] $github_api_token = Sensitive.new(system::env('GITHUB_API_TOKEN')),
   Optional[String[1]]  $checks  = undef,
 ){
+  $repo_targets = get_targets($targets)
 
   if $checks.empty {
     $method = 'get'
@@ -25,7 +26,7 @@ plan github_inventory::required_checks(
   }
 
   $results = run_task_with(
-    'http_request', $targets, "${method.capitalize} status checks protection"
+    'http_request', $repo_targets, "${method.capitalize} status checks protection"
   ) |$target| {
     {
      'base_url' => "${target.facts['url']}/",
