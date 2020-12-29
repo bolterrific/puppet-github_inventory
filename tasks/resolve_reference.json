@@ -4,20 +4,35 @@
   "description": "Return a GitHub organization's repositories as local inventory targets",
   "parameters": {
     "org": {
-      "description": "GitHub org name to inventory",
+      "description": "GitHub org name (or user login) with repos",
       "type": "String[1]"
     },
     "github_api_token": {
       "description": "Optional GitHub personal OAuth token, which may be useful to avoid the GitHub API's unauthenticated rate limits",
       "type": "Optional[String[1]]"
     },
+    "archived_repos": {
+      "description": "When true, includes archived repositories in results.",
+      "type": "Boolean",
+      "default": false
+    },
+    "private_repos": {
+      "description": "When true, includes private repositories in results.",
+      "type": "Boolean",
+      "default": false
+    },
     "allow_list": {
-      "description": "repo names/patterns to include in inventory",
+      "description": "repo names/patterns to include in inventory, drops all other repos",
       "type": "Optional[Array[String[1]]]"
     },
     "block_list": {
-      "description": "repo names/patterns to reject from inventory (can reject targets included by allow_list)",
+      "description": "repo names/patterns to reject from inventory (can reject targets in allow_list)",
       "type": "Optional[Array[String[1]]]"
+    },
+    "transport_type": {
+      "description": "Bolt Transport type of repository Targets",
+      "type": "String[1]",
+      "default": "local"
     },
     "extra_gem_path": {
       "description": "Additional GEM_PATH path for ruby gems (to find `octokit`)",
