@@ -1,10 +1,13 @@
+---
 version: 2
 
 config:
   transport: local
   local:
-    interpreters:
-      .rb: /opt/puppetlabs/bolt/bin/ruby
+    bundled-ruby: true
+    # # Bolt < 2.37 version of the above (platform-specific)
+    # interpreters:
+    #   .rb: /opt/puppetlabs/bolt/bin/ruby
     tmpdir:
      _plugin: env_var
      var: PWD
@@ -20,3 +23,9 @@ groups:
         github_api_token:
           _plugin: env_var
           var: GITHUB_API_TOKEN
+        # archived_repos: true
+        # allow_list:
+        #   - '/^pupmod-simp/'
+        #   - 'simp-core'
+        # block_list:
+        #   - '/_/'
