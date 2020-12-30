@@ -1,5 +1,5 @@
 {
-  "name": "opct-github_inventory",
+  "name": "bolterrific-github_inventory",
   "version": "0.1.0",
   "author": "Chris Tessmer",
   "summary": "A Bolt plugin that generates local Targets from GitHub org repositories",
