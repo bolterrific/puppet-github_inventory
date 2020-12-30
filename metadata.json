@@ -5,6 +5,8 @@
   "summary": "A Bolt plugin that generates local Targets from GitHub org repositories",
   "license": "Apache-2.0",
   "source": "https://github.com/op-ct/puppet-github_inventory",
+  "project_page": "https://github.com/op-ct/puppet-github_inventory",
+  "issues_url": "https://github.com/op-ct/puppet-github_inventory/issues",
   "dependencies": [
     {
       "name": "puppetlabs-ruby_plugin_helper",

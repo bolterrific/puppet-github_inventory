@@ -11,11 +11,11 @@ plan github_inventory::workflows(
   Sensitive[String[1]] $github_api_token = Sensitive.new(system::env('GITHUB_API_TOKEN')),
 ){
   $results = run_task_with(
-    'http_request', $targets, "Find repos with GitHub Actions workflows"
+    'http_request', $targets, 'Find repos with GitHub Actions workflows'
   ) |$target| {
     {
-     'base_url' => "${target.facts['url']}/",
-     'path'     => "actions/workflows",
+      'base_url' => "${target.facts['url']}/",
+      'path'     => 'actions/workflows',
       'headers' => {
         'Accept'        => 'application/vnd.github.v3+json',
         'Authorization' => "token ${github_api_token.unwrap}",

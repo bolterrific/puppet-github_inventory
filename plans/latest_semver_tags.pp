@@ -18,9 +18,9 @@ plan github_inventory::latest_semver_tags(
     'http_request', $repo_targets, "Get repos' info from API"
   ) |$target| {
     {
-     'base_url' => "${target.facts['tags_url']}",
-     'method'   => 'get',
-     'headers' => {
+      'base_url' => "${target.facts['tags_url']}",
+      'method'   => 'get',
+      'headers' => {
         'Accept'        => 'application/vnd.github.v3+json',
         'Authorization' => "token ${github_api_token.unwrap}",
       },

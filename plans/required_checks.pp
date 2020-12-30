@@ -29,10 +29,10 @@ plan github_inventory::required_checks(
     'http_request', $repo_targets, "${method.capitalize} status checks protection"
   ) |$target| {
     {
-     'base_url' => "${target.facts['url']}/",
-     'method'   => $method,
-     'body'     => $body,
-     'path'     => "branches/${target.facts['default_branch']}/protection/required_status_checks/contexts",
+      'base_url' => "${target.facts['url']}/",
+      'method'   => $method,
+      'body'     => $body,
+      'path'     => "branches/${target.facts['default_branch']}/protection/required_status_checks/contexts",
       'headers' => {
         'Accept'        => 'application/vnd.github.v3+json',
         'Authorization' => "token ${github_api_token.unwrap}",
@@ -49,7 +49,7 @@ plan github_inventory::required_checks(
         [$r.target.name, format::colorize( "${r.value['body']['message']}", 'red' )]
       } else {
         $body = $r.value['body'] =~ Array ? {
-          true  => $r.value['body'].join(", "),
+          true  => $r.value['body'].join(', '),
           false => String($r.value['body'])[0,60],
         }
         $checks = $r.value['body'].any |$x| { $x =~ /Travis|travis/ } ? {
