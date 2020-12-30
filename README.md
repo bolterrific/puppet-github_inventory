@@ -94,14 +94,20 @@ config:
 
 See [REFERENCE.md](./REFERENCE.md)
 
-
 ## Limitations
 
-FIXME In the Limitations section, list any incompatibilities, known issues, or other warnings.
+In order to provide an example bolt project in the same module as the inventory
+plugin, the example `bolt-project.yaml` adds `..` to the `modulepath`.  This
+means that (when using the example bolt project) the folder containing this repo
+_must_ be named `github_inventory`.  There may be other weirdness, depending on
+this folders' neighbors.
+
+This quirk only affects the example bolt project; it will not affect the
+inventory plugin or Bolt plans from your own Bolt projects.
 
 ## Development
 
-FIXME In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
+Submit PRs on the project's GitHub page.
 
 [bolt]: https://puppet.com/docs/bolt/latest/bolt.html
 [bolt-install]: https://puppet.com/docs/bolt/latest/bolt_installing.html
