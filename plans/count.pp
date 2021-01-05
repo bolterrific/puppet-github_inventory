@@ -7,5 +7,5 @@ plan github_inventory::count(
   TargetSpec $targets = 'repo_targets',
 ){
   $repo_targets = get_targets($targets)
-  out::message( "Repos: ${targets.size}" )
+  out::message( "Repos: ${repo_targets.size}" )
 }
