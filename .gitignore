@@ -33,3 +33,4 @@
 *.lock
 *.log
 *.orig
+/_repos/

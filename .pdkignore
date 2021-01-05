@@ -48,3 +48,4 @@
 *.lock
 *.orig
 *.log
+/_repos/
