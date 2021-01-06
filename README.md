@@ -5,6 +5,7 @@
 <!-- vim-markdown-toc GFM -->
 
 * [Description](#description)
+  * [Why is this useful?](#why-is-this-useful)
 * [Setup](#setup)
   * [Setup Requirements](#setup-requirements)
   * [Beginning with github_inventory](#beginning-with-github_inventory)
@@ -23,7 +24,14 @@ Bolt]. It uses the GitHub API to dynamically provide a list of [`local`
 transport] Targets that represent each repository under a GitHub org.
 
 This module also contains an example Bolt project with a working
-`inventory.yaml` and several Bolt plans.
+`inventory.yaml` and several [Bolt plans].
+
+### Why is this useful?
+
+Using inventory Targets to represent GitHub repos enables org maintainers to
+quickly scaffold Bolt plans to orchestrate org-wide changes or queries on your
+GitHub repositories (and their settings).
+
 
 ## Setup
 
@@ -111,6 +119,7 @@ Submit PRs on the project's GitHub page.
 
 [bolt]: https://puppet.com/docs/bolt/latest/bolt.html
 [bolt-install]: https://puppet.com/docs/bolt/latest/bolt_installing.html
+[Bolt Plans]: https://puppet.com/docs/bolt/latest/plans.html
 [inventory file]: https://puppet.com/docs/bolt/latest/inventory_file_v2.html
 [inventory reference plugin]: https://puppet.com/docs/bolt/latest/using_plugins.html#reference-plugins
 [`local` transport]: https://puppet.com/docs/bolt/latest/bolt_transports_reference.html#local

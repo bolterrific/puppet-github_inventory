@@ -1,6 +1,6 @@
 {
   "name": "bolterrific-github_inventory",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Chris Tessmer",
   "summary": "A Bolt plugin that generates local Targets from GitHub org repositories",
   "license": "Apache-2.0",
@@ -8,10 +8,6 @@
   "project_page": "https://github.com/op-ct/puppet-github_inventory",
   "issues_url": "https://github.com/op-ct/puppet-github_inventory/issues",
   "dependencies": [
-    {
-      "name": "puppetlabs-ruby_plugin_helper",
-      "version_requirement": "0.x"
-    },
     {
       "name": "puppetlabs/ruby_task_helper",
       "version_requirement": "0.x"

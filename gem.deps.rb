@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Using bolt's packaged gem command, install with:
 #
 #

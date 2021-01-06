@@ -4,13 +4,13 @@ version: 2
 config:
   transport: local
   local:
+    tmpdir:
+     _plugin: env_var
+     var: PWD
     bundled-ruby: true
     # # Bolt < 2.37 version of the above (platform-specific)
     # interpreters:
     #   .rb: /opt/puppetlabs/bolt/bin/ruby
-    tmpdir:
-     _plugin: env_var
-     var: PWD
 
 groups:
   - name: repo_targets
