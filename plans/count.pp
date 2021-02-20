@@ -1,11 +1,11 @@
 # Example plan, prints number of Targets from inventory
 #
 # @param targets
-#    By default: `repo_targets` group from inventory
+#    By default: `github_repos` group from inventory
 #
 plan github_inventory::count(
-  TargetSpec $targets = 'repo_targets',
+  TargetSpec $targets = 'github_repos',
 ){
-  $repo_targets = get_targets($targets)
-  out::message( "Repos: ${repo_targets.size}" )
+  $github_repos = get_targets($targets)
+  out::message( "Repos: ${github_repos.size}" )
 }

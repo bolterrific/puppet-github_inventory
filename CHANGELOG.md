@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.2.1]
+
+**Fixed**
+
+* Fixed missing `get_targets` in `github_inventory::workflows` plan
+
+**Changed**
+
+* Renamed example `inventory.yaml` group to `github_repos` to play more nicely
+  with other projects' `inventory.yaml`
+
 ## [0.2.0]
 
 **Added**
@@ -27,6 +38,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 * Inventory plugin that returns GitHub org repos as `local` transport Targets
 * Example Bolt project with working Plans and `inventory.yaml`
 
-[Unreleased]: https://github.com/bolterrific/puppet-github_inventory/compare/0.2.0...HEAD
 [0.1.0]: https://github.com/bolterrific/puppet-github_inventory/releases/tag/0.1.0
 [0.2.0]: https://github.com/bolterrific/puppet-github_inventory/compare/0.1.0...0.2.0
+[0.2.1]: https://github.com/bolterrific/puppet-github_inventory/compare/0.2.0...0.2.1
+[Unreleased]: https://github.com/bolterrific/puppet-github_inventory/compare/0.2.1...HEAD

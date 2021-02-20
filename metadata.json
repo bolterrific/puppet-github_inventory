@@ -1,6 +1,6 @@
 {
   "name": "bolterrific-github_inventory",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Chris Tessmer",
   "summary": "A Bolt plugin that generates local Targets from GitHub org repositories",
   "license": "Apache-2.0",

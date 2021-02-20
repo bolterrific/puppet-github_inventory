@@ -10,8 +10,8 @@
 
 ### Plans
 
+* [`github_inventory::clone_git_repos`](#github_inventoryclone_git_repos): Clone all repos into a local directory
 * [`github_inventory::count`](#github_inventorycount): Example plan, prints number of Targets from inventory
-* [`github_inventory::git_clone`](#github_inventorygit_clone): Clone all repos into a local directory
 * [`github_inventory::latest_semver_tags`](#github_inventorylatest_semver_tags): Report the highest SemVer tag for each repo (that has SemVer tags)
 * [`github_inventory::required_checks`](#github_inventoryrequired_checks): List and/or set which PR checks are required on each repo
 * [`github_inventory::workflows`](#github_inventoryworkflows): Return repos with GitHub Actions workflows
@@ -76,6 +76,30 @@ Additional GEM_PATH path for ruby gems (to find `octokit`)
 
 ## Plans
 
+### `github_inventory::clone_git_repos`
+
+Clone all repos into a local directory
+
+#### Parameters
+
+The following parameters are available in the `github_inventory::clone_git_repos` plan.
+
+##### `targets`
+
+Data type: `TargetSpec`
+
+By default: `github_repos` group from inventory
+
+Default value: `'github_repos'`
+
+##### `target_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+Local directory to clone repos into
+
+Default value: `"${system::env('PWD')}/_repos"`
+
 ### `github_inventory::count`
 
 Example plan, prints number of Targets from inventory
@@ -88,33 +112,9 @@ The following parameters are available in the `github_inventory::count` plan.
 
 Data type: `TargetSpec`
 
-By default: `repo_targets` group from inventory
+By default: `github_repos` group from inventory
 
-Default value: `'repo_targets'`
-
-### `github_inventory::git_clone`
-
-Clone all repos into a local directory
-
-#### Parameters
-
-The following parameters are available in the `github_inventory::git_clone` plan.
-
-##### `targets`
-
-Data type: `TargetSpec`
-
-By default: `repo_targets` group from inventory
-
-Default value: `'repo_targets'`
-
-##### `target_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-Local directory to clone repos into
-
-Default value: `"${system::env('PWD')}/_repos"`
+Default value: `'github_repos'`
 
 ### `github_inventory::latest_semver_tags`
 
@@ -130,9 +130,9 @@ The following parameters are available in the `github_inventory::latest_semver_t
 
 Data type: `TargetSpec`
 
-By default: `repo_targets` group from inventory
+By default: `github_repos` group from inventory
 
-Default value: `'repo_targets'`
+Default value: `'github_repos'`
 
 ##### `github_api_token`
 
@@ -154,9 +154,9 @@ The following parameters are available in the `github_inventory::required_checks
 
 Data type: `TargetSpec`
 
-By default: `repo_targets` group from inventory
+By default: `github_repos` group from inventory
 
-Default value: `'repo_targets'`
+Default value: `'github_repos'`
 
 ##### `github_api_token`
 
@@ -187,9 +187,9 @@ The following parameters are available in the `github_inventory::workflows` plan
 
 Data type: `TargetSpec`
 
-By default: `repo_targets` group from inventory
+By default: `github_repos` group from inventory
 
-Default value: `get_targets('repo_targets')`
+Default value: `get_targets('github_repos')`
 
 ##### `github_api_token`
 

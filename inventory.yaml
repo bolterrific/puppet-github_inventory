@@ -13,7 +13,7 @@ config:
     #   .rb: /opt/puppetlabs/bolt/bin/ruby
 
 groups:
-  - name: repo_targets
+  - name: github_repos
     targets:
       - _plugin: github_inventory
         org:
@@ -27,5 +27,9 @@ groups:
         # allow_list:
         #   - '/^pupmod-simp/'
         #   - 'simp-core'
-        # block_list:
-        #   - '/_/'
+        block_list:
+          - 'puppetsync'
+          - rubygem-simp-test
+          - simp-doc
+          - pupmod-simp-dummy
+          - pkg-r10k

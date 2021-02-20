@@ -3,19 +3,19 @@
 # @note ONLY reports repos with SemVer tags (ignores `/^v/` and `/-d$/`)
 #
 # @param targets
-#    By default: `repo_targets` group from inventory
+#    By default: `github_repos` group from inventory
 #
 # @param github_api_token
 #    GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
 #
 plan github_inventory::latest_semver_tags(
-  TargetSpec           $targets = 'repo_targets',
+  TargetSpec           $targets = 'github_repos',
   Sensitive[String[1]] $github_api_token = Sensitive.new(system::env('GITHUB_API_TOKEN')),
 ){
-  $repo_targets = get_targets($targets)
+  $github_repos = get_targets($targets)
 
   $results = run_task_with(
-    'http_request', $repo_targets, "Get repos' info from API"
+    'http_request', $github_repos, "Get repos' info from API"
   ) |$target| {
     {
       'base_url' => "${target.facts['tags_url']}",
