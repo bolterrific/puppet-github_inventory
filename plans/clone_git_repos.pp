@@ -1,7 +1,7 @@
 # Clone all repos into a local directory
 #
 # @param targets
-#    By default: `github_repos` group from inventory
+#    Name of `github_inventory` Targets (or inventory group)
 #
 # @param target_dir
 #    Local directory to clone repos into

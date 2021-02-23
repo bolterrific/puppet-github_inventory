@@ -1,10 +1,10 @@
 # List and/or set which PR checks are required on each repo
 #
 # @param targets
-#    By default: `github_repos` group from inventory
+#    Name of `github_inventory` Targets (or inventory group)
 #
 # @param github_api_token
-#    GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
+#    GitHub API token.  Needs `repo` scope to see or set checks.
 #
 # @param checks
 #    Optional comma-delimited list of required PR Checks to set on all repos

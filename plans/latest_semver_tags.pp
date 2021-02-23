@@ -3,10 +3,10 @@
 # @note ONLY reports repos with SemVer tags (ignores `/^v/` and `/-d$/`)
 #
 # @param targets
-#    By default: `github_repos` group from inventory
+#    Name of `github_inventory` Targets (or inventory group)
 #
 # @param github_api_token
-#    GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
+#    GitHub API token.  Doesn't require any scope for public repos.
 #
 plan github_inventory::latest_semver_tags(
   TargetSpec           $targets = 'github_repos',

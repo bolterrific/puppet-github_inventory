@@ -4,10 +4,10 @@
 #    By default: `github_repos` group from inventory
 #
 # @param github_api_token
-#    GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
+#    GitHub API token.  Doesn't require any scope for public repos.
 #
 plan github_inventory::workflows(
-  TargetSpec           $targets = get_targets('github_repos'),
+  TargetSpec           $targets = 'github_repos',
   Sensitive[String[1]] $github_api_token = Sensitive.new(system::env('GITHUB_API_TOKEN')),
 ){
   $github_repos = get_targets($targets)
