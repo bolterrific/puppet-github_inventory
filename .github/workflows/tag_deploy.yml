@@ -51,10 +51,10 @@ jobs:
       - run: bundle exec rake metadata_lint
       - run: bundle exec rake lint
       - run: |
-        wget https://apt.puppet.com/puppet-tools-release-bionic.deb
-        sudo dpkg -i puppet-tools-release-bionic.deb
-        sudo apt-get update
-        sudo apt-get install pdk
+          wget https://apt.puppet.com/puppet-tools-release-bionic.deb
+          sudo dpkg -i puppet-tools-release-bionic.deb
+          sudo apt-get update
+          sudo apt-get install pdk
       - name: "Test that Puppet module can build"
         run: "pdk build --force"
 
