@@ -7,7 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 **Fixed**
 
-* Fixed missing `get_targets` in `github_inventory::workflows` plan
+* Fixed bug that caused String `$targets` to fail in the example plan
+  `github_inventory::workflows` (by adding `get_targets()`)
 
 **Changed**
 

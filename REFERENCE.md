@@ -18,7 +18,7 @@
 
 ## Tasks
 
-### `resolve_reference`
+### <a name="resolve_reference"></a>`resolve_reference`
 
 Return a GitHub organization's repositories as local inventory targets
 
@@ -76,23 +76,26 @@ Additional GEM_PATH path for ruby gems (to find `octokit`)
 
 ## Plans
 
-### `github_inventory::clone_git_repos`
+### <a name="github_inventoryclone_git_repos"></a>`github_inventory::clone_git_repos`
 
 Clone all repos into a local directory
 
 #### Parameters
 
-The following parameters are available in the `github_inventory::clone_git_repos` plan.
+The following parameters are available in the `github_inventory::clone_git_repos` plan:
 
-##### `targets`
+* [`targets`](#targets)
+* [`target_dir`](#target_dir)
+
+##### <a name="targets"></a>`targets`
 
 Data type: `TargetSpec`
 
-By default: `github_repos` group from inventory
+Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-##### `target_dir`
+##### <a name="target_dir"></a>`target_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -100,23 +103,25 @@ Local directory to clone repos into
 
 Default value: `"${system::env('PWD')}/_repos"`
 
-### `github_inventory::count`
+### <a name="github_inventorycount"></a>`github_inventory::count`
 
 Example plan, prints number of Targets from inventory
 
 #### Parameters
 
-The following parameters are available in the `github_inventory::count` plan.
+The following parameters are available in the `github_inventory::count` plan:
 
-##### `targets`
+* [`targets`](#targets)
+
+##### <a name="targets"></a>`targets`
 
 Data type: `TargetSpec`
 
-By default: `github_repos` group from inventory
+Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-### `github_inventory::latest_semver_tags`
+### <a name="github_inventorylatest_semver_tags"></a>`github_inventory::latest_semver_tags`
 
 Report the highest SemVer tag for each repo (that has SemVer tags)
 
@@ -124,49 +129,56 @@ Report the highest SemVer tag for each repo (that has SemVer tags)
 
 #### Parameters
 
-The following parameters are available in the `github_inventory::latest_semver_tags` plan.
+The following parameters are available in the `github_inventory::latest_semver_tags` plan:
 
-##### `targets`
+* [`targets`](#targets)
+* [`github_api_token`](#github_api_token)
+
+##### <a name="targets"></a>`targets`
 
 Data type: `TargetSpec`
 
-By default: `github_repos` group from inventory
+Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-##### `github_api_token`
+##### <a name="github_api_token"></a>`github_api_token`
 
 Data type: `Sensitive[String[1]]`
 
-GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
+GitHub API token.  Doesn't require any scope for public repos.
 
 Default value: `(system::env('GITHUB_API_TOKEN'))`
 
-### `github_inventory::required_checks`
+### <a name="github_inventoryrequired_checks"></a>`github_inventory::required_checks`
 
 List and/or set which PR checks are required on each repo
 
 #### Parameters
 
-The following parameters are available in the `github_inventory::required_checks` plan.
+The following parameters are available in the `github_inventory::required_checks` plan:
 
-##### `targets`
+* [`targets`](#targets)
+* [`github_api_token`](#github_api_token)
+* [`checks`](#checks)
+
+##### <a name="targets"></a>`targets`
 
 Data type: `TargetSpec`
 
-By default: `github_repos` group from inventory
+Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-##### `github_api_token`
+##### <a name="github_api_token"></a>`github_api_token`
 
 Data type: `Sensitive[String[1]]`
 
-GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
+GitHub API token.  Needs `repo` scope to see or set checks.
 
 Default value: `(system::env('GITHUB_API_TOKEN'))`
 
-##### `checks`
+##### <a name="checks"></a>`checks`
 
 Data type: `Optional[String[1]]`
 
@@ -175,27 +187,30 @@ If defined, this will overwrite ALL repos' required PR checks
 
 Default value: ``undef``
 
-### `github_inventory::workflows`
+### <a name="github_inventoryworkflows"></a>`github_inventory::workflows`
 
 Return repos with GitHub Actions workflows
 
 #### Parameters
 
-The following parameters are available in the `github_inventory::workflows` plan.
+The following parameters are available in the `github_inventory::workflows` plan:
 
-##### `targets`
+* [`targets`](#targets)
+* [`github_api_token`](#github_api_token)
+
+##### <a name="targets"></a>`targets`
 
 Data type: `TargetSpec`
 
 By default: `github_repos` group from inventory
 
-Default value: `get_targets('github_repos')`
+Default value: `'github_repos'`
 
-##### `github_api_token`
+##### <a name="github_api_token"></a>`github_api_token`
 
 Data type: `Sensitive[String[1]]`
 
-GitHub API token.  By default, this will use the `GITHUB_API_TOKEN` environment variable.
+GitHub API token.  Doesn't require any scope for public repos.
 
 Default value: `(system::env('GITHUB_API_TOKEN'))`
 
