@@ -62,8 +62,8 @@ class GithubOrg < TaskHelper
       YAML
       target['facts'] = repo.to_hash
 
-      # There cannot be a fact called 'name', or Puppet compiles in `apply`
-      # blocks fail with the error `Cannot reassign variable '$name'`
+      # There cannot be a fact called 'name', or the Puppet compiler in `apply`
+      # blocks will fail with the error `Cannot reassign variable '$name'`
       name = target['facts'].delete(:name)
       target['facts'][:_name] = name
 

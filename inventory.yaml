@@ -5,10 +5,7 @@ config:
     tmpdir:
      _plugin: env_var
      var: PWD
-    bundled-ruby: true
-    # # Bolt < 2.37 version of the above (platform-specific)
-    # interpreters:
-    #   .rb: /opt/puppetlabs/bolt/bin/ruby
+    bundled-ruby: true  # requires Bolt >= 2.37
 
 groups:
   - name: github_repos
@@ -17,17 +14,13 @@ groups:
         org:
           _plugin: env_var
           var: GITHUB_ORG
-          default: simp
+          default: bolterrific
         github_api_token:
           _plugin: env_var
           var: GITHUB_API_TOKEN
-        # archived_repos: true
+        # archived_repos: true  # Default: false
         # allow_list:
-        #   - '/^pupmod-simp/'
-        #   - 'simp-core'
+        #   - '/^pupmod-/'
+        #   - '/^pupmod-rubygem/'
         block_list:
           - 'puppetsync'
-          - rubygem-simp-test
-          - simp-doc
-          - pupmod-simp-dummy
-          - pkg-r10k
