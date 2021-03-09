@@ -9,8 +9,7 @@ spec/spec_helper.rb:
   paths:
     - /.puppet-lint.rc
     - /.sync.yml
-
-.rsync:
+.rspec:
   unmanaged: true
 .travis.yml:
   delete: true
