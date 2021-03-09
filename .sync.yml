@@ -1,11 +1,17 @@
 ---
 spec/spec_helper.rb:
   mock_with: ':rspec'
+.gitignore:
+  paths:
+    - /.modules/
+    - /.resource_types/
 .pdkignore:
   paths:
     - /.puppet-lint.rc
     - /.sync.yml
 
+.rsync:
+  unmanaged: true
 .travis.yml:
   delete: true
 appveyor.yml:
