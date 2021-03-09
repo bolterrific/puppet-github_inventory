@@ -1,0 +1,14 @@
+---
+spec/spec_helper.rb:
+  mock_with: ':rspec'
+.pdkignore:
+  paths:
+    - /.puppet-lint.rc
+    - /.sync.yml
+
+.travis.yml:
+  delete: true
+appveyor.yml:
+  delete: true
+.gitlab-ci.yml:
+  delete: true

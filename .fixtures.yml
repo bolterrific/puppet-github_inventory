@@ -1,0 +1,8 @@
+---
+fixtures:
+  repositories:
+    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib
+    ruby_task_helper: https://github.com/puppetlabs/puppetlabs-ruby_task_helper
+    ruby_plugin_helper: https://github.com/puppetlabs/puppetlabs-ruby_plugin_helper
+  symlinks:
+    github_inventory: "#{source_dir}"

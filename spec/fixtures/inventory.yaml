@@ -1,0 +1,210 @@
+---
+config:
+  transport: local
+  local:
+    tmpdir:
+     _plugin: env_var
+     var: PWD
+  bundled-ruby: true  # requires Bolt >= 2.37
+
+# simulated Targets as returned by the github_inventory::resolve_references task
+groups:
+  - name: github_repos
+    targets:
+      - name: puppet-github_inventory
+        vars: {}
+        facts:
+          id: 314910416
+          node_id: MDEwOlJlcG9zaXRvcnkzMTQ5MTA0MTY=
+          full_name: bolterrific/puppet-github_inventory
+          private: false
+          owner:
+            login: bolterrific
+            id: 76968616
+            node_id: MDEyOk9yZ2FuaXphdGlvbjc2OTY4NjE2
+            avatar_url: https://avatars.githubusercontent.com/u/76968616?v=4
+            gravatar_id: ''
+            url: https://api.github.com/users/bolterrific
+            html_url: https://github.com/bolterrific
+            followers_url: https://api.github.com/users/bolterrific/followers
+            following_url: https://api.github.com/users/bolterrific/following{/other_user}
+            gists_url: https://api.github.com/users/bolterrific/gists{/gist_id}
+            starred_url: https://api.github.com/users/bolterrific/starred{/owner}{/repo}
+            subscriptions_url: https://api.github.com/users/bolterrific/subscriptions
+            organizations_url: https://api.github.com/users/bolterrific/orgs
+            repos_url: https://api.github.com/users/bolterrific/repos
+            events_url: https://api.github.com/users/bolterrific/events{/privacy}
+            received_events_url: https://api.github.com/users/bolterrific/received_events
+            type: Organization
+            site_admin: false
+          html_url: https://github.com/bolterrific/puppet-github_inventory
+          description: Bolt inventory plugin to generate local Targets from a GitHub org's repositories
+          fork: false
+          url: https://api.github.com/repos/bolterrific/puppet-github_inventory
+          forks_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/forks
+          keys_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/keys{/key_id}
+          collaborators_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/collaborators{/collaborator}
+          teams_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/teams
+          hooks_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/hooks
+          issue_events_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/issues/events{/number}
+          events_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/events
+          assignees_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/assignees{/user}
+          branches_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/branches{/branch}
+          tags_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/tags
+          blobs_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/git/blobs{/sha}
+          git_tags_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/git/tags{/sha}
+          git_refs_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/git/refs{/sha}
+          trees_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/git/trees{/sha}
+          statuses_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/statuses/{sha}
+          languages_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/languages
+          stargazers_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/stargazers
+          contributors_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/contributors
+          subscribers_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/subscribers
+          subscription_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/subscription
+          commits_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/commits{/sha}
+          git_commits_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/git/commits{/sha}
+          comments_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/comments{/number}
+          issue_comment_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/issues/comments{/number}
+          contents_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/contents/{+path}
+          compare_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/compare/{base}...{head}
+          merges_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/merges
+          archive_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/{archive_format}{/ref}
+          downloads_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/downloads
+          issues_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/issues{/number}
+          pulls_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/pulls{/number}
+          milestones_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/milestones{/number}
+          notifications_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/notifications{?since,all,participating}
+          labels_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/labels{/name}
+          releases_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/releases{/id}
+          deployments_url: https://api.github.com/repos/bolterrific/puppet-github_inventory/deployments
+          created_at: 2020-11-21 21:55:25 UTC
+          updated_at: 2021-02-23 02:38:47 UTC
+          pushed_at: 2021-02-23 02:39:19 UTC
+          git_url: git://github.com/bolterrific/puppet-github_inventory.git
+          ssh_url: git@github.com:bolterrific/puppet-github_inventory.git
+          clone_url: https://github.com/bolterrific/puppet-github_inventory.git
+          svn_url: https://github.com/bolterrific/puppet-github_inventory
+          homepage: ''
+          size: 68
+          stargazers_count: 0
+          watchers_count: 0
+          language: Ruby
+          has_issues: true
+          has_projects: true
+          has_downloads: true
+          has_wiki: false
+          has_pages: false
+          forks_count: 0
+          mirror_url:
+          archived: false
+          disabled: false
+          open_issues_count: 0
+          license:
+          forks: 0
+          open_issues: 0
+          watchers: 0
+          default_branch: main
+          permissions:
+            admin: true
+            push: true
+            pull: true
+          _name: puppet-github_inventory
+      - name: puppet-gitlab_inventory
+        vars: {}
+        facts:
+          id: 325883942
+          node_id: MDEwOlJlcG9zaXRvcnkzMjU4ODM5NDI=
+          full_name: bolterrific/puppet-gitlab_inventory
+          private: false
+          owner:
+            login: bolterrific
+            id: 76968616
+            node_id: MDEyOk9yZ2FuaXphdGlvbjc2OTY4NjE2
+            avatar_url: https://avatars.githubusercontent.com/u/76968616?v=4
+            gravatar_id: ''
+            url: https://api.github.com/users/bolterrific
+            html_url: https://github.com/bolterrific
+            followers_url: https://api.github.com/users/bolterrific/followers
+            following_url: https://api.github.com/users/bolterrific/following{/other_user}
+            gists_url: https://api.github.com/users/bolterrific/gists{/gist_id}
+            starred_url: https://api.github.com/users/bolterrific/starred{/owner}{/repo}
+            subscriptions_url: https://api.github.com/users/bolterrific/subscriptions
+            organizations_url: https://api.github.com/users/bolterrific/orgs
+            repos_url: https://api.github.com/users/bolterrific/repos
+            events_url: https://api.github.com/users/bolterrific/events{/privacy}
+            received_events_url: https://api.github.com/users/bolterrific/received_events
+            type: Organization
+            site_admin: false
+          html_url: https://github.com/bolterrific/puppet-gitlab_inventory
+          description: Bolt inventory plugin to generate local Targets from a GitLab group's
+            projects
+          fork: false
+          url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory
+          forks_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/forks
+          keys_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/keys{/key_id}
+          collaborators_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/collaborators{/collaborator}
+          teams_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/teams
+          hooks_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/hooks
+          issue_events_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/issues/events{/number}
+          events_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/events
+          assignees_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/assignees{/user}
+          branches_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/branches{/branch}
+          tags_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/tags
+          blobs_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/git/blobs{/sha}
+          git_tags_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/git/tags{/sha}
+          git_refs_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/git/refs{/sha}
+          trees_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/git/trees{/sha}
+          statuses_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/statuses/{sha}
+          languages_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/languages
+          stargazers_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/stargazers
+          contributors_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/contributors
+          subscribers_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/subscribers
+          subscription_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/subscription
+          commits_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/commits{/sha}
+          git_commits_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/git/commits{/sha}
+          comments_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/comments{/number}
+          issue_comment_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/issues/comments{/number}
+          contents_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/contents/{+path}
+          compare_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/compare/{base}...{head}
+          merges_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/merges
+          archive_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/{archive_format}{/ref}
+          downloads_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/downloads
+          issues_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/issues{/number}
+          pulls_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/pulls{/number}
+          milestones_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/milestones{/number}
+          notifications_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/notifications{?since,all,participating}
+          labels_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/labels{/name}
+          releases_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/releases{/id}
+          deployments_url: https://api.github.com/repos/bolterrific/puppet-gitlab_inventory/deployments
+          created_at: 2020-12-31 22:43:14 UTC
+          updated_at: 2021-02-24 00:11:21 UTC
+          pushed_at: 2021-02-24 00:11:19 UTC
+          git_url: git://github.com/bolterrific/puppet-gitlab_inventory.git
+          ssh_url: git@github.com:bolterrific/puppet-gitlab_inventory.git
+          clone_url: https://github.com/bolterrific/puppet-gitlab_inventory.git
+          svn_url: https://github.com/bolterrific/puppet-gitlab_inventory
+          homepage: ''
+          size: 18
+          stargazers_count: 1
+          watchers_count: 1
+          language: Ruby
+          has_issues: true
+          has_projects: true
+          has_downloads: true
+          has_wiki: true
+          has_pages: false
+          forks_count: 0
+          mirror_url:
+          archived: false
+          disabled: false
+          open_issues_count: 0
+          license:
+          forks: 0
+          open_issues: 0
+          watchers: 1
+          default_branch: main
+          permissions:
+            admin: true
+            push: true
+            pull: true
+          _name: puppet-gitlab_inventory
