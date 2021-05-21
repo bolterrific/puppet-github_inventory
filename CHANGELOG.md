@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 * New parameters `display_result` and `return_result` in the example plan
   `github_inventory::latest_semver_tags`
 
+**Fixed**
+
+* Fixed misnamed variable in example plan `github_inventory::clone_git_repos`
+
 ## [0.2.1]
 
 **Fixed**

@@ -13,7 +13,7 @@ plan github_inventory::clone_git_repos(
     file{ $target_dir: ensure => directory }
   }
 
-  $github_repos = get_targets($github_repos)
+  $github_repos = get_targets($targets)
   $github_repos.each |$target| {
     run_command("cd ${target_dir.shellquote}; git clone '${target.facts['clone_url']}' '${target.facts['_name']}'", 'localhost')
   }
