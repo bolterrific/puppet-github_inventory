@@ -8,9 +8,17 @@
 # @param github_api_token
 #    GitHub API token.  Doesn't require any scope for public repos.
 #
+# @param display_result
+#    When `true`, plan prints result using `out::message`
+#
+# @param return_result
+#    When `true`, plan returns data in a ResultSet
+#
 plan github_inventory::latest_semver_tags(
   TargetSpec           $targets = 'github_repos',
   Sensitive[String[1]] $github_api_token = Sensitive.new(system::env('GITHUB_API_TOKEN')),
+  Boolean $display_result = true,
+  Boolean $return_result  = false,
 ){
   $github_repos = get_targets($targets)
 
@@ -28,7 +36,7 @@ plan github_inventory::latest_semver_tags(
     }
   }
 
-  $a_results = $results.ok_set.map |$r| {
+  $h_results = $results.ok_set.map |$r| {
     $tag = ($r.value['body'].map |$x| { $x['name'] }).filter |$x| {
       $x =~ /^v?\d+\.\d+\.\d+(-\d+)?$/
     }.max |$a, $b| {
@@ -36,13 +44,21 @@ plan github_inventory::latest_semver_tags(
       $semver_b = SemVer($a.regsubst(/^v/,'').regsubst(/-\d+$/,'')) # RPM-style `-<release number>`
       compare($semver_a, $semver_b)
     }
-    if $tag { [$r.target.name, $tag] } else { undef }
-  }.filter |$x| { $x =~ NotUndef }
-  $h_results = Hash($a_results)
+    if $tag {
+      $tag_data = $r.value['body'].filter |$x| { $x['name'] == $tag }[0]
+      [$r.target.name, $tag_data ]
+    } else { undef }
+  }.filter |$x| { $x =~ NotUndef }.with |$x|{ Hash($x) }
 
-  out::message(format::table({
-    title => "${h_results.size} Results",
-    head  => ['Repo', 'Latest SemVer Tag'],
-    rows  => $h_results.map |$k,$v| { [$k, $v] }
-  }))
+
+  if $display_result {
+    $tag_results = $h_results.map |$k,$v| { [$k, $v['name']] }.with |$x| { Hash($x) }
+    out::message(format::table({
+      title => "${tag_results.size} Results",
+      head  => ['Repo', 'Latest SemVer Tag'],
+      rows  => $tag_results.map |$k,$v| { [$k, $v] }
+    }))
+  }
+
+  if $return_result { return $h_results }
 }
