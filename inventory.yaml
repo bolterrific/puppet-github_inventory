@@ -21,6 +21,6 @@ groups:
         # archived_repos: true  # Default: false
         # allow_list:
         #   - '/^pupmod-/'
-        #   - '/^pupmod-rubygem/'
+        #   - '/^rubygem-/'
         block_list:
           - 'puppetsync'

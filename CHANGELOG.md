@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+**Added**
+
+* New example plan `github_inventory::update_forked_mirrors`, which keeps a
+  forked repos' default branch & tags synced to its parent repo
+
 ## [0.3.0]
 
 **Added**
