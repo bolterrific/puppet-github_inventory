@@ -34,6 +34,11 @@
       "type": "String[1]",
       "default": "local"
     },
+    "accept_header": {
+      "description": "Override to request a custom media type from the GitHub API",
+      "type": "String[1]",
+      "default": "application/vnd.github.v3+json"
+    },
     "extra_gem_path": {
       "description": "Additional GEM_PATH path for ruby gems (to find `octokit`)",
       "type": "Optional[String[1]]"

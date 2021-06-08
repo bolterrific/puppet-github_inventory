@@ -19,13 +19,14 @@ class GithubOrg < TaskHelper
     transport_type   = kwargs[:transport_type]
     block_list       = kwargs[:block_list]
     allow_list       = kwargs[:allow_list]
+    accept_header    = kwargs[:accept_header]
 
     require 'octokit'
     Octokit.auto_paginate = true
     @client = Octokit::Client.new(
       access_token: github_api_token,
       connection_options: {
-        headers: ['application/vnd.github.luke-cage-preview+json'],
+        headers: [accept_header]
       },
     )
 
