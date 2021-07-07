@@ -50,7 +50,8 @@ jobs:
           bundler-cache: true
       - run: bundle exec rake metadata_lint
       - run: bundle exec rake lint
-      - run: |
+      - name: Install PDK package
+        run: |
           wget https://apt.puppet.com/puppet-tools-release-bionic.deb
           sudo dpkg -i puppet-tools-release-bionic.deb
           sudo apt-get update
@@ -117,12 +118,14 @@ jobs:
         with:
           ref: ${{ github.ref }}
           clean: true
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.5
-          bundler-cache: true
+      - name: Install PDK package
+        run: |
+          wget https://apt.puppet.com/puppet-tools-release-bionic.deb
+          sudo dpkg -i puppet-tools-release-bionic.deb
+          sudo apt-get update
+          sudo apt-get install pdk
       - name: Build Puppet module (PDK)
-        run: bundle exec pdk build --force
+        run: pdk build --force
       - name: Deploy to Puppet Forge
         run: |
           curl -X POST --silent --show-error --fail \
