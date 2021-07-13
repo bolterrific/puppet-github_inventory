@@ -11,6 +11,5 @@ tasks:
 
 modules:
   - puppetlabs-http_request
-  - git: 'https://github.com/voxpupuli/puppet-format.git'
-    ref: v0.1.1
+  - puppet-format
   - nwops-debug

@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 * New example plan `github_inventory::update_forked_mirrors`, which keeps a
   forked repos' default branch & tags synced to its parent repo
+* Add associated release data (if present) for tags returned by
+  `github_inventory::latest_semver_tags`
+* Use forge-based `puppet-debug` module
 
 ## [0.3.0]
 
