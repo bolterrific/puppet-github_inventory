@@ -55,15 +55,14 @@ plan github_inventory::latest_semver_tags(
     Hash($kv_pairs)
   }
 
-
-
   $repos_latest_tag_data = $tag_resultset.ok_set.map |$r| {
     # Find highest SemVer-ish (1.2.3, v1.2.3, 1.2.3-4) tag
     $tag = ($r.value['body'].map |$x| { $x['name'] }).filter |$x| {
       $x =~ /^v?\d+\.\d+\.\d+(-\d+)?$/
     }.max |$a, $b| {
-      $semver_a = SemVer($a.regsubst(/^v/,'').regsubst(/-\d+$/,'')) # voxpupuli-style `v<SemVer>`
-      $semver_b = SemVer($a.regsubst(/^v/,'').regsubst(/-\d+$/,'')) # RPM-style `-<release number>`
+      # Normalize  voxpupuli-style `v<SemVer>` and RPM-style `-<release number>`
+      $semver_a = SemVer($a.regsubst(/^v/,'').regsubst(/-\d+$/,''))
+      $semver_b = SemVer($b.regsubst(/^v/,'').regsubst(/-\d+$/,''))
       compare($semver_a, $semver_b)
     }
 
