@@ -67,15 +67,34 @@ plan github_inventory::latest_semver_tags(
     }
 
     if $tag {
-      $tag_data = $r.value['body'].filter |$x| { $x['name'] == $tag }[0]
+      # select and massage data for tag
+      $tag_data = ($r.value['body'].filter |$x| { $x['name'] == $tag }[0] )
+      $user_fields = ['login','id','type']
+
       $release_for_tag = (
         $release_results_hash[$r.target.name].then |$rel_r| {
           $rel_r.value['body'].filter |$x| { $x['tag_name'] == $tag }
         }.lest || { [] }
-      )[0]
-      [$r.target.name, $tag_data + {'_release' => $release_for_tag }]
-    } else { undef }
-  }.filter |$x| { $x =~ NotUndef }.with |$x|{ Hash($x) }
+      )[0].then |$rel_hash| {
+        # Slim down noisy user data from 'author' and assets' 'uploads' fields
+        $author_hash = $rel_hash['author'].then |$a| {
+          $a.filter |$k,$v| { $k in $user_fields }.with |$new_hash| {{ 'author' => $new_hash }}
+        }.lest || {{}}
+
+        $assets_hash = $rel_hash['assets'].then |$assets| {
+          $assets.map |$asset| {
+            $asset + {'uploader' =>  $asset['uploader'].filter |$k,$v| { $k in $user_fields }}
+          }.with |$x| {{ 'assets' => $x }}
+        }.lest || {{}}
+
+        $rel_hash + $author_hash + $assets_hash
+      }
+      $release_hash = $release_for_tag.then |$x| {{'_release' =>  $release_for_tag }}.lest || {{}}
+      [$r.target.name, $tag_data + $release_hash]
+    } else {
+      undef
+    }
+  }.filter |$x| { $x =~ NotUndef }.with |$x| { Hash($x) }
 
   if $display_result {
     $table_rows = $repos_latest_tag_data.map |$k,$v| {

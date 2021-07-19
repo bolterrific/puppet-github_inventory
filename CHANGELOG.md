@@ -6,17 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 
 
-<!--
 ## [Unreleased]
-
-### Added
-
-### Changed
 
 ### Fixed
 
-### Removed
--->
+* Slimmed down overwhelming amount of inconsequential user data returned by
+  example plan `github_inventory::latest_semver_tags`
+
 
 ## [0.4.1] - 2021-07-19
 
