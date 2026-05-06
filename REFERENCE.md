@@ -13,7 +13,7 @@
 
 * [`github_inventory::clone_git_repos`](#github_inventory--clone_git_repos): Clone all repos into a local directory
 * [`github_inventory::count`](#github_inventory--count): Example plan, prints number of Targets from inventory
-* [`github_inventory::latest_semver_tags`](#github_inventory--latest_semver_tags): Report the highest SemVer tag for each repo (that has SemVer tags)
+* [`github_inventory::latest_semver_tags`](#github_inventory--latest_semver_tags): Report the highest SemVer tag for each repo (that has SemVer tags), including information release (if a release exists for that tag) and uplo
 * [`github_inventory::required_checks`](#github_inventory--required_checks): List and/or set which PR checks are required on each repo
 * [`github_inventory::update_forked_mirrors`](#github_inventory--update_forked_mirrors): Update default branches & tags on forked GitHub repos (with an option to only affect Puppet module projects for a specific forge org)  For ea
 * [`github_inventory::workflows`](#github_inventory--workflows): Return repos with GitHub Actions workflows
@@ -220,9 +220,10 @@ Default value: `false`
 
 ### <a name="github_inventory--latest_semver_tags"></a>`github_inventory::latest_semver_tags`
 
-Report the highest SemVer tag for each repo (that has SemVer tags)
+Report the highest SemVer tag for each repo (that has SemVer tags), including
+information release (if a release exists for that tag) and uploaded assets
 
-* **Note** ONLY reports repos with SemVer tags (ignores `/^v/` and `/-d$/`)
+* **Note** reports repos with "SemVer-ish" tags (includes `/^v/` and `/-d$/`)
 
 #### Parameters
 
@@ -310,7 +311,7 @@ Update default branches & tags on forked GitHub repos
 For each target repo (provided by `github_inventory` plugin):
   * Clone repo
   * (Optional) skip if repo is not a Puppet module for desired `forge_org`
-  * Add parent repo as remote, fetch parent's default branch and tags
+  * Add parent repo as remote, fetchparent's default branch and tags
   * (Optional) skip if `noop` or repo is in `noop_repos`
   * Push parent's default branch to repo (and push tags on branch)
   * Ensure repo's default branch matches parent's default branch
@@ -323,12 +324,12 @@ Target repos can be fine-tuned in the inventory by using the
 The following parameters are available in the `github_inventory::update_forked_mirrors` plan:
 
 * [`targets`](#-github_inventory--update_forked_mirrors--targets)
-* [`github_api_token`](#-github_inventory--update_forked_mirrors--github_api_token)
-* [`clone_repos`](#-github_inventory--update_forked_mirrors--clone_repos)
 * [`target_dir`](#-github_inventory--update_forked_mirrors--target_dir)
-* [`forge_org`](#-github_inventory--update_forked_mirrors--forge_org)
 * [`noop`](#-github_inventory--update_forked_mirrors--noop)
 * [`noop_repos`](#-github_inventory--update_forked_mirrors--noop_repos)
+* [`github_api_token`](#-github_inventory--update_forked_mirrors--github_api_token)
+* [`clone_repos`](#-github_inventory--update_forked_mirrors--clone_repos)
+* [`forge_org`](#-github_inventory--update_forked_mirrors--forge_org)
 
 ##### <a name="-github_inventory--update_forked_mirrors--targets"></a>`targets`
 
@@ -338,23 +339,6 @@ Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-##### <a name="-github_inventory--update_forked_mirrors--github_api_token"></a>`github_api_token`
-
-Data type: `Sensitive[String[1]]`
-
-GitHub API token.
-
-Default value: `Sensitive.new(system::env('GITHUB_API_TOKEN'))`
-
-##### <a name="-github_inventory--update_forked_mirrors--clone_repos"></a>`clone_repos`
-
-Data type: `Boolean`
-
-When true, clones repos locally.
-Set to false if local clones already exist with staged changes.
-
-Default value: `true`
-
 ##### <a name="-github_inventory--update_forked_mirrors--target_dir"></a>`target_dir`
 
 Data type: `Stdlib::Absolutepath`
@@ -362,15 +346,6 @@ Data type: `Stdlib::Absolutepath`
 Local directory to clone repos into (when clone_repos = true)
 
 Default value: `"${system::env('PWD')}/_repos"`
-
-##### <a name="-github_inventory--update_forked_mirrors--forge_org"></a>`forge_org`
-
-Data type: `Variant[String[1],false]`
-
-Forge org name, required in module's metadata.json
-Set to `false` to process all module repos, regardless of forge org
-
-Default value: `'puppetlabs'`
 
 ##### <a name="-github_inventory--update_forked_mirrors--noop"></a>`noop`
 
@@ -385,9 +360,33 @@ Default value: `true`
 
 Data type: `Array[String,0]`
 
-List of repos to always treat as noop, even when noop=false
+List of specific repos to always treat as noop, even when noop=false
 
 Default value: `[]`
+
+##### <a name="-github_inventory--update_forked_mirrors--github_api_token"></a>`github_api_token`
+
+Data type: `Sensitive[String[1]]`
+
+
+
+Default value: `Sensitive.new(system::env('GITHUB_API_TOKEN'))`
+
+##### <a name="-github_inventory--update_forked_mirrors--clone_repos"></a>`clone_repos`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-github_inventory--update_forked_mirrors--forge_org"></a>`forge_org`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: `'puppetlabs'`
 
 ### <a name="github_inventory--workflows"></a>`github_inventory::workflows`
 
