@@ -36,24 +36,24 @@ jobs:
   releng-checks:
     name: "RELENG checks"
     if: github.repository_owner == 'bolterrific'
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-24.04
     steps:
       - name: "Assert '${{ github.ref }}' is a tag"
         run: '[[ "$GITHUB_REF" =~ ^refs/tags/ ]] || { echo "::error ::GITHUB_REF is not a tag: ${GITHUB_REF}"; exit 1 ; }'
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           clean: true
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.5
+          ruby-version: 3.4
           bundler-cache: true
       - run: bundle exec rake metadata_lint
       - run: bundle exec rake lint
       - name: Install PDK package
         run: |
-          wget https://apt.puppet.com/puppet-tools-release-bionic.deb
-          sudo dpkg -i puppet-tools-release-bionic.deb
+          wget https://apt.puppet.com/https://apt.puppet.com/puppet-tools-release-noble.deb
+          sudo dpkg -i puppet-tools-release-noble.deb
           sudo apt-get update
           sudo apt-get install pdk
       - name: "Test that Puppet module can build"
@@ -63,10 +63,10 @@ jobs:
 ###    name: Deploy GitHub Release
 ###    needs: [ releng-checks ]
 ###    if: github.repository_owner == 'bolterrific'
-###    runs-on: ubuntu-18.04
+###    runs-on: ubuntu-24.04
 ###    steps:
 ###      - name: Checkout code
-###        uses: actions/checkout@v2
+###        uses: actions/checkout@v6
 ###        with:
 ###          ref: ${{ github.ref }}
 ###          clean: true
@@ -107,21 +107,21 @@ jobs:
     name: Deploy PuppetForge Release
     needs: [ releng-checks ]
     if: github.repository_owner == 'bolterrific'
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-24.04
     env:
       PUPPETFORGE_API_TOKEN: ${{ secrets.PUPPETFORGE_API_TOKEN }}
       FORGE_USER_AGENT: GitHubActions-ForgeReleng-Workflow/0.4.0 (Purpose/forge-ops-for-${{ github.event.repository.name }})
       FORGE_API_URL: https://forgeapi.puppet.com/v3/releases
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           clean: true
       - name: Install PDK package
         run: |
-          wget https://apt.puppet.com/puppet-tools-release-bionic.deb
-          sudo dpkg -i puppet-tools-release-bionic.deb
+          wget https://apt.puppet.com/puppet-tools-release-noble.deb
+          sudo dpkg -i puppet-tools-release-noble.deb
           sudo apt-get update
           sudo apt-get install pdk
       - name: Build Puppet module (PDK)
