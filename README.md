@@ -22,7 +22,7 @@
 
 ## Description
 
-**github_inventory** is an [inventory reference plugin] for [Puppet Bolt]. It
+**github_inventory** is an [inventory reference plugin] for [OpenVox OpenBolt][Puppet Bolt]. It
 uses the GitHub API to dynamically provide a collection of [`local` transport]
 Targets that represent each repository under a GitHub organization or user.
 
@@ -39,15 +39,15 @@ org-wide repo operations at scale, using simple & reusable [Bolt Plans].
 Simplicity, speed, and reusability:  It's trivial to define an inventory, and
 Bolt plans are generally concise and legible.  And when using multiple Targets
 (repos) with Bolt plan functions like `run_*()`/`parallelize()`, you get
-concurrent execution  built-in for free. Plans are easy to wrap up in a module
+concurrent execution for free!  Plans are easy to wrap up in a module
 and share, so the next time someone has to reset all the required PR checks in
 a 200-repo org, they can just pull out the plan and run it on targets from
 _their_ org.
 
 Each `github_inventory` Target describes its repository in its `.facts`, using
-the same keys as the data structure returned by GitHub's [`/orgs/{org}/repos`]
-or [`/repos/{username}/repos`] endpoints (with [*one* important
-exception](_name-vs-name)).
+the same keys as the data structure returned by GitHub API's
+[`/orgs/{org}/repos`] or [`/repos/{username}/repos`] endpoints (with [*one*
+important exception](_name-vs-name)).
 
 Targets use the [`local` transport] by default.  This keeps execution as
 frictionless as possible and ensures that a known version of Ruby (the Bolt
@@ -55,7 +55,7 @@ interpreter's) is available to execute tasks.  It also also opens the door
 to advanced uses, like git-cloning repos en masse into local working
 directories and enforcing file conventions with Tasks and `apply()` blocks.
 
-**Note:** Targets don't use the [`remote` Transport].  It can
+**Note:** Targets _don't_ use the [`remote` Transport], which can
 only run [remote Tasks] (which rules out the built-in [`http_request`]) and
 can't compile Puppet `apply()` blocks.
 
@@ -63,7 +63,8 @@ can't compile Puppet `apply()` blocks.
 
 ### Setup Requirements
 
-* [Puppet Bolt 3.0+ or 2.37][bolt], installed from an [OS package][bolt-install] (don't use the RubyGem)
+* [Puppet Bolt][bolt] or [OpenVox OpenBolt][openbolt] 3+, installed from an [OS
+  package][bolt-install] (don't use the RubyGem)
 * A GitHub API personal auth token with sufficient scope
 * The [`octokit` RubyGem][octokit-rb]
 
@@ -109,7 +110,7 @@ groups:
   - name: repo_targets
     targets:
       - _plugin: github_inventory  # <- Plugin provides `local` Targets
-        org: simp                  # <- GitHub org with Target repos
+        org: bolterrific           # <- GitHub org with Target repos
         github_api_token:          # <- API token with scope that can get repos
           _plugin: env_var         # <- (provided by another Bolt plugin)
           var: GITHUB_API_TOKEN
@@ -165,6 +166,8 @@ Submit PRs on the project's GitHub page.
 [Bolt Plans]: https://puppet.com/docs/bolt/latest/plans.html
 [Bolt Tasks]: https://puppet.com/docs/bolt/latest/tasks.html
 [bolt]: https://puppet.com/docs/bolt/latest/bolt.html
+[OpenVox OpenBolt]: https://github.com/OpenVoxProject/openbolt
+[openbolt]: https://github.com/OpenVoxProject/openbolt
 [bolt-install]: https://puppet.com/docs/bolt/latest/bolt_installing.html
 [inventory file]: https://puppet.com/docs/bolt/latest/inventory_file_v2.html
 [inventory reference plugin]: https://puppet.com/docs/bolt/latest/using_plugins.html#reference-plugins
