@@ -5,8 +5,17 @@ require 'bolt_spec/plans'
 describe 'github_inventory::count' do
   include BoltSpec::Plans  # Include the BoltSpec library functions
 
+  def modulepath
+    [File.expand_path('../fixtures/modules', __dir__)]
+  end
+
   def inventory_data
     YAML.load_file(File.expand_path('spec/fixtures/inventory.yaml'))
+  end
+
+  # Configure Puppet and Bolt before running any tests
+  before(:all) do
+    BoltSpec::Plans.init
   end
 
   context 'when "github_repos" inventory group contains 2 targets' do
@@ -15,7 +24,7 @@ describe 'github_inventory::count' do
     subject(:plan_result){ run_plan('github_inventory::count', params ) }
 
     context 'with default parameteres' do
-      let(:params){ {} }
+      let(:params){{}}
 
       before(:each){
         expect_out_message.with_params("Target count: #{expected_count}")
