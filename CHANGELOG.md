@@ -11,8 +11,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 * New task `github_inventory::headmost_tag_for_branch` to find the `HEAD`-most
   tag along a particular GitHub repo branch
+* Added support for all sorts of OSes
+  - (Basically, if you can install Bolt and the octokit gem, this inventory
+    plugin should work)
 
 ### Changed
+
 
 ### Fixed
 
