@@ -6,18 +6,63 @@
 
 ### Tasks
 
+* [`headmost_tag_for_branch`](#headmost_tag_for_branch): Return the HEAD-most tag along a GitHub repo branch
 * [`resolve_reference`](#resolve_reference): Return a GitHub organization's repositories as local inventory targets
 
 ### Plans
 
-* [`github_inventory::clone_git_repos`](#github_inventoryclone_git_repos): Clone all repos into a local directory
-* [`github_inventory::count`](#github_inventorycount): Example plan, prints number of Targets from inventory
-* [`github_inventory::latest_semver_tags`](#github_inventorylatest_semver_tags): Report the highest SemVer tag for each repo (that has SemVer tags), including information release (if a release exists for that tag) and uplo
-* [`github_inventory::required_checks`](#github_inventoryrequired_checks): List and/or set which PR checks are required on each repo
-* [`github_inventory::update_forked_mirrors`](#github_inventoryupdate_forked_mirrors): Update default branches & tags on forked GitHub repos (with an option to only affect Puppet module projects for a specific forge org)  For ea
-* [`github_inventory::workflows`](#github_inventoryworkflows): Return repos with GitHub Actions workflows
+* [`github_inventory::clone_git_repos`](#github_inventory--clone_git_repos): Clone all repos into a local directory
+* [`github_inventory::count`](#github_inventory--count): Example plan, prints number of Targets from inventory
+* [`github_inventory::latest_semver_tags`](#github_inventory--latest_semver_tags): Report the highest SemVer tag for each repo (that has SemVer tags)
+* [`github_inventory::required_checks`](#github_inventory--required_checks): List and/or set which PR checks are required on each repo
+* [`github_inventory::update_forked_mirrors`](#github_inventory--update_forked_mirrors): Update default branches & tags on forked GitHub repos (with an option to only affect Puppet module projects for a specific forge org)  For ea
+* [`github_inventory::workflows`](#github_inventory--workflows): Return repos with GitHub Actions workflows
 
 ## Tasks
+
+### <a name="headmost_tag_for_branch"></a>`headmost_tag_for_branch`
+
+Return the HEAD-most tag along a GitHub repo branch
+
+**Supports noop?** false
+
+#### Parameters
+
+##### `repo`
+
+Data type: `String[1]`
+
+Full GitHub repo name (`org/repo`)
+
+##### `branch`
+
+Data type: `String[1]`
+
+Branch to look for tags along
+
+##### `with_release`
+
+Data type: `Boolean`
+
+When true, return latest tag with a release
+
+##### `github_api_token`
+
+Data type: `Optional[String[1]]`
+
+Optional GitHub personal OAuth token, which may be useful to avoid the GitHub API's unauthenticated rate limits
+
+##### `accept_header`
+
+Data type: `String[1]`
+
+Override to request a custom media type from the GitHub API
+
+##### `extra_gem_path`
+
+Data type: `Optional[String[1]]`
+
+Additional GEM_PATH path for ruby gems (to find `octokit`)
 
 ### <a name="resolve_reference"></a>`resolve_reference`
 
@@ -83,7 +128,7 @@ Additional GEM_PATH path for ruby gems (to find `octokit`)
 
 ## Plans
 
-### <a name="github_inventoryclone_git_repos"></a>`github_inventory::clone_git_repos`
+### <a name="github_inventory--clone_git_repos"></a>`github_inventory::clone_git_repos`
 
 Clone all repos into a local directory
 
@@ -91,13 +136,13 @@ Clone all repos into a local directory
 
 The following parameters are available in the `github_inventory::clone_git_repos` plan:
 
-* [`targets`](#targets)
-* [`target_dir`](#target_dir)
-* [`collision_strategy`](#collision_strategy)
-* [`clone_protocol`](#clone_protocol)
-* [`return_result`](#return_result)
+* [`targets`](#-github_inventory--clone_git_repos--targets)
+* [`target_dir`](#-github_inventory--clone_git_repos--target_dir)
+* [`collision_strategy`](#-github_inventory--clone_git_repos--collision_strategy)
+* [`clone_protocol`](#-github_inventory--clone_git_repos--clone_protocol)
+* [`return_result`](#-github_inventory--clone_git_repos--return_result)
 
-##### <a name="targets"></a>`targets`
+##### <a name="-github_inventory--clone_git_repos--targets"></a>`targets`
 
 Data type: `TargetSpec`
 
@@ -105,7 +150,7 @@ Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-##### <a name="target_dir"></a>`target_dir`
+##### <a name="-github_inventory--clone_git_repos--target_dir"></a>`target_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -113,7 +158,7 @@ Local directory to clone repos into
 
 Default value: `"${system::env('PWD')}/_repos"`
 
-##### <a name="collision_strategy"></a>`collision_strategy`
+##### <a name="-github_inventory--clone_git_repos--collision_strategy"></a>`collision_strategy`
 
 Data type: `Enum[fail,skip,overwrite,fetch]`
 
@@ -121,7 +166,7 @@ Action to take when a local repo directory already exists
 
 Default value: `'skip'`
 
-##### <a name="clone_protocol"></a>`clone_protocol`
+##### <a name="-github_inventory--clone_git_repos--clone_protocol"></a>`clone_protocol`
 
 Data type: `Enum[http,ssh]`
 
@@ -129,15 +174,15 @@ Data type: `Enum[http,ssh]`
 
 Default value: `'http'`
 
-##### <a name="return_result"></a>`return_result`
+##### <a name="-github_inventory--clone_git_repos--return_result"></a>`return_result`
 
 Data type: `Boolean`
 
 When `true`, plan returns data in a ResultSet
 
-Default value: ``false``
+Default value: `false`
 
-### <a name="github_inventorycount"></a>`github_inventory::count`
+### <a name="github_inventory--count"></a>`github_inventory::count`
 
 Example plan, prints number of Targets from inventory
 
@@ -145,11 +190,11 @@ Example plan, prints number of Targets from inventory
 
 The following parameters are available in the `github_inventory::count` plan:
 
-* [`targets`](#targets)
-* [`display_result`](#display_result)
-* [`return_result`](#return_result)
+* [`targets`](#-github_inventory--count--targets)
+* [`display_result`](#-github_inventory--count--display_result)
+* [`return_result`](#-github_inventory--count--return_result)
 
-##### <a name="targets"></a>`targets`
+##### <a name="-github_inventory--count--targets"></a>`targets`
 
 Data type: `TargetSpec`
 
@@ -157,39 +202,38 @@ Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-##### <a name="display_result"></a>`display_result`
+##### <a name="-github_inventory--count--display_result"></a>`display_result`
 
 Data type: `Boolean`
 
 When `true`, plan prints result using `out::message`
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="return_result"></a>`return_result`
+##### <a name="-github_inventory--count--return_result"></a>`return_result`
 
 Data type: `Boolean`
 
 When `true`, plan returns data in a ResultSet
 
-Default value: ``false``
+Default value: `false`
 
-### <a name="github_inventorylatest_semver_tags"></a>`github_inventory::latest_semver_tags`
+### <a name="github_inventory--latest_semver_tags"></a>`github_inventory::latest_semver_tags`
 
-Report the highest SemVer tag for each repo (that has SemVer tags), including
-information release (if a release exists for that tag) and uploaded assets
+Report the highest SemVer tag for each repo (that has SemVer tags)
 
-* **Note** reports repos with "SemVer-ish" tags (includes `/^v/` and `/-d$/`)
+* **Note** ONLY reports repos with SemVer tags (ignores `/^v/` and `/-d$/`)
 
 #### Parameters
 
 The following parameters are available in the `github_inventory::latest_semver_tags` plan:
 
-* [`targets`](#targets)
-* [`github_api_token`](#github_api_token)
-* [`display_result`](#display_result)
-* [`return_result`](#return_result)
+* [`targets`](#-github_inventory--latest_semver_tags--targets)
+* [`github_api_token`](#-github_inventory--latest_semver_tags--github_api_token)
+* [`display_result`](#-github_inventory--latest_semver_tags--display_result)
+* [`return_result`](#-github_inventory--latest_semver_tags--return_result)
 
-##### <a name="targets"></a>`targets`
+##### <a name="-github_inventory--latest_semver_tags--targets"></a>`targets`
 
 Data type: `TargetSpec`
 
@@ -197,31 +241,31 @@ Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-##### <a name="github_api_token"></a>`github_api_token`
+##### <a name="-github_inventory--latest_semver_tags--github_api_token"></a>`github_api_token`
 
 Data type: `Sensitive[String[1]]`
 
 GitHub API token.  Doesn't require any scope for public repos.
 
-Default value: `(system::env('GITHUB_API_TOKEN'))`
+Default value: `Sensitive.new(system::env('GITHUB_API_TOKEN'))`
 
-##### <a name="display_result"></a>`display_result`
+##### <a name="-github_inventory--latest_semver_tags--display_result"></a>`display_result`
 
 Data type: `Boolean`
 
 When `true`, plan prints result using `out::message`
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="return_result"></a>`return_result`
+##### <a name="-github_inventory--latest_semver_tags--return_result"></a>`return_result`
 
 Data type: `Boolean`
 
 When `true`, plan returns data in a ResultSet
 
-Default value: ``false``
+Default value: `false`
 
-### <a name="github_inventoryrequired_checks"></a>`github_inventory::required_checks`
+### <a name="github_inventory--required_checks"></a>`github_inventory::required_checks`
 
 List and/or set which PR checks are required on each repo
 
@@ -229,11 +273,11 @@ List and/or set which PR checks are required on each repo
 
 The following parameters are available in the `github_inventory::required_checks` plan:
 
-* [`targets`](#targets)
-* [`github_api_token`](#github_api_token)
-* [`checks`](#checks)
+* [`targets`](#-github_inventory--required_checks--targets)
+* [`github_api_token`](#-github_inventory--required_checks--github_api_token)
+* [`checks`](#-github_inventory--required_checks--checks)
 
-##### <a name="targets"></a>`targets`
+##### <a name="-github_inventory--required_checks--targets"></a>`targets`
 
 Data type: `TargetSpec`
 
@@ -241,24 +285,24 @@ Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-##### <a name="github_api_token"></a>`github_api_token`
+##### <a name="-github_inventory--required_checks--github_api_token"></a>`github_api_token`
 
 Data type: `Sensitive[String[1]]`
 
 GitHub API token.  Needs `repo` scope to see or set checks.
 
-Default value: `(system::env('GITHUB_API_TOKEN'))`
+Default value: `Sensitive.new(system::env('GITHUB_API_TOKEN'))`
 
-##### <a name="checks"></a>`checks`
+##### <a name="-github_inventory--required_checks--checks"></a>`checks`
 
 Data type: `Optional[String[1]]`
 
 Optional comma-delimited list of required PR Checks to set on all repos
 If defined, this will overwrite ALL repos' required PR checks
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="github_inventoryupdate_forked_mirrors"></a>`github_inventory::update_forked_mirrors`
+### <a name="github_inventory--update_forked_mirrors"></a>`github_inventory::update_forked_mirrors`
 
 Update default branches & tags on forked GitHub repos
 (with an option to only affect Puppet module projects for a specific forge org)
@@ -266,7 +310,7 @@ Update default branches & tags on forked GitHub repos
 For each target repo (provided by `github_inventory` plugin):
   * Clone repo
   * (Optional) skip if repo is not a Puppet module for desired `forge_org`
-  * Add parent repo as remote, fetchparent's default branch and tags
+  * Add parent repo as remote, fetch parent's default branch and tags
   * (Optional) skip if `noop` or repo is in `noop_repos`
   * Push parent's default branch to repo (and push tags on branch)
   * Ensure repo's default branch matches parent's default branch
@@ -278,15 +322,15 @@ Target repos can be fine-tuned in the inventory by using the
 
 The following parameters are available in the `github_inventory::update_forked_mirrors` plan:
 
-* [`targets`](#targets)
-* [`target_dir`](#target_dir)
-* [`noop`](#noop)
-* [`noop_repos`](#noop_repos)
-* [`github_api_token`](#github_api_token)
-* [`clone_repos`](#clone_repos)
-* [`forge_org`](#forge_org)
+* [`targets`](#-github_inventory--update_forked_mirrors--targets)
+* [`github_api_token`](#-github_inventory--update_forked_mirrors--github_api_token)
+* [`clone_repos`](#-github_inventory--update_forked_mirrors--clone_repos)
+* [`target_dir`](#-github_inventory--update_forked_mirrors--target_dir)
+* [`forge_org`](#-github_inventory--update_forked_mirrors--forge_org)
+* [`noop`](#-github_inventory--update_forked_mirrors--noop)
+* [`noop_repos`](#-github_inventory--update_forked_mirrors--noop_repos)
 
-##### <a name="targets"></a>`targets`
+##### <a name="-github_inventory--update_forked_mirrors--targets"></a>`targets`
 
 Data type: `TargetSpec`
 
@@ -294,7 +338,24 @@ Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
-##### <a name="target_dir"></a>`target_dir`
+##### <a name="-github_inventory--update_forked_mirrors--github_api_token"></a>`github_api_token`
+
+Data type: `Sensitive[String[1]]`
+
+GitHub API token.
+
+Default value: `Sensitive.new(system::env('GITHUB_API_TOKEN'))`
+
+##### <a name="-github_inventory--update_forked_mirrors--clone_repos"></a>`clone_repos`
+
+Data type: `Boolean`
+
+When true, clones repos locally.
+Set to false if local clones already exist with staged changes.
+
+Default value: `true`
+
+##### <a name="-github_inventory--update_forked_mirrors--target_dir"></a>`target_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -302,48 +363,33 @@ Local directory to clone repos into (when clone_repos = true)
 
 Default value: `"${system::env('PWD')}/_repos"`
 
-##### <a name="noop"></a>`noop`
+##### <a name="-github_inventory--update_forked_mirrors--forge_org"></a>`forge_org`
+
+Data type: `Variant[String[1],false]`
+
+Forge org name, required in module's metadata.json
+Set to `false` to process all module repos, regardless of forge org
+
+Default value: `'puppetlabs'`
+
+##### <a name="-github_inventory--update_forked_mirrors--noop"></a>`noop`
 
 Data type: `Boolean`
 
 When true, all repos will run through all prep steps, but not push up
 changes.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="noop_repos"></a>`noop_repos`
+##### <a name="-github_inventory--update_forked_mirrors--noop_repos"></a>`noop_repos`
 
 Data type: `Array[String,0]`
 
-List of specific repos to always treat as noop, even when noop=false
+List of repos to always treat as noop, even when noop=false
 
 Default value: `[]`
 
-##### <a name="github_api_token"></a>`github_api_token`
-
-Data type: `Sensitive[String[1]]`
-
-
-
-Default value: `(system::env('GITHUB_API_TOKEN'))`
-
-##### <a name="clone_repos"></a>`clone_repos`
-
-Data type: `Boolean`
-
-
-
-Default value: ``true``
-
-##### <a name="forge_org"></a>`forge_org`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: `'puppetlabs'`
-
-### <a name="github_inventoryworkflows"></a>`github_inventory::workflows`
+### <a name="github_inventory--workflows"></a>`github_inventory::workflows`
 
 Return repos with GitHub Actions workflows
 
@@ -351,10 +397,10 @@ Return repos with GitHub Actions workflows
 
 The following parameters are available in the `github_inventory::workflows` plan:
 
-* [`targets`](#targets)
-* [`github_api_token`](#github_api_token)
+* [`targets`](#-github_inventory--workflows--targets)
+* [`github_api_token`](#-github_inventory--workflows--github_api_token)
 
-##### <a name="targets"></a>`targets`
+##### <a name="-github_inventory--workflows--targets"></a>`targets`
 
 Data type: `TargetSpec`
 
@@ -362,11 +408,11 @@ By default: `github_repos` group from inventory
 
 Default value: `'github_repos'`
 
-##### <a name="github_api_token"></a>`github_api_token`
+##### <a name="-github_inventory--workflows--github_api_token"></a>`github_api_token`
 
 Data type: `Sensitive[String[1]]`
 
 GitHub API token.  Doesn't require any scope for public repos.
 
-Default value: `(system::env('GITHUB_API_TOKEN'))`
+Default value: `Sensitive.new(system::env('GITHUB_API_TOKEN'))`
 

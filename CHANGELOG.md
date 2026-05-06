@@ -16,6 +16,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+* In plan `github_inventory::update_forked_mirrors`, $forge_org was Optional
+  but could not be unset.  It is now a Variant that can be set to `false`
+
 ### Removed
 
 ## [0.4.2] - 2021-07-19

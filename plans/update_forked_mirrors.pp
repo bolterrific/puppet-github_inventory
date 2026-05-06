@@ -4,7 +4,7 @@
 # For each target repo (provided by `github_inventory` plugin):
 #   * Clone repo
 #   * (Optional) skip if repo is not a Puppet module for desired `forge_org`
-#   * Add parent repo as remote, fetchparent's default branch and tags
+#   * Add parent repo as remote, fetch parent's default branch and tags
 #   * (Optional) skip if `noop` or repo is in `noop_repos`
 #   * Push parent's default branch to repo (and push tags on branch)
 #   * Ensure repo's default branch matches parent's default branch
@@ -15,8 +15,19 @@
 # @param targets
 #    Name of `github_inventory` Targets (or inventory group)
 #
+# @param github_api_token
+#     GitHub API token.
+#
+# @param clone_repos
+#     When true, clones repos locally.
+#     Set to false if local clones already exist with staged changes.
+#
 # @param target_dir
 #    Local directory to clone repos into (when clone_repos = true)
+#
+# @param forge_org
+#    Forge org name, required in module's metadata.json
+#    Set to `false` to process all module repos, regardless of forge org
 #
 # @param noop
 #    When true, all repos will run through all prep steps, but not push up
@@ -30,7 +41,7 @@ plan github_inventory::update_forked_mirrors(
   Sensitive[String[1]] $github_api_token = Sensitive.new(system::env('GITHUB_API_TOKEN')),
   Boolean $clone_repos                   = true,
   Stdlib::Absolutepath $target_dir       = "${system::env('PWD')}/_repos",
-  Optional[String[1]] $forge_org         = 'puppetlabs',
+  Variant[String[1],false] $forge_org    = 'puppetlabs',
   Boolean $noop                          = true,
   Array[String,0] $noop_repos            = [],
 ){
