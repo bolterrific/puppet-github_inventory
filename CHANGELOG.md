@@ -5,17 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 
-<!--
 ## [Unreleased]
 
 ### Added
+
+* New task `github_inventory::headmost_tag_for_branch` to find the `HEAD`-most
+  tag along a particular GitHub repo branch
 
 ### Changed
 
 ### Fixed
 
 ### Removed
--->
 
 ## [0.4.2] - 2021-07-19
 

@@ -1,0 +1,37 @@
+{
+  "puppet_task_version": 1,
+  "supports_noop": false,
+  "description": "Return the HEAD-most tag along a GitHub repo branch",
+  "parameters": {
+    "repo": {
+      "description": "Full GitHub repo name (`org/repo`)",
+      "type": "String[1]"
+    },
+    "branch": {
+      "description": "Branch to look for tags along",
+      "type": "String[1]"
+    },
+    "with_release": {
+      "description": "When true, return latest tag with a release",
+      "type": "Boolean",
+      "default": false
+    },
+    "github_api_token": {
+      "description": "Optional GitHub personal OAuth token, which may be useful to avoid the GitHub API's unauthenticated rate limits",
+      "type": "Optional[String[1]]"
+    },
+    "accept_header": {
+      "description": "Override to request a custom media type from the GitHub API",
+      "type": "String[1]",
+      "default": "application/vnd.github.v3+json"
+    },
+    "extra_gem_path": {
+      "description": "Additional GEM_PATH path for ruby gems (to find `octokit`)",
+      "type": "Optional[String[1]]"
+    }
+  },
+  "files": [
+    "ruby_plugin_helper/lib/plugin_helper.rb",
+    "ruby_task_helper/files/task_helper.rb"
+  ]
+}
