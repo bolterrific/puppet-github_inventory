@@ -31,10 +31,10 @@ class GithubOrg < TaskHelper
     )
 
     repos = if @client.user(org)['type'] == 'User'
-      @client.repos(org)
-    else
-      @client.org_repos(org)
-    end
+              @client.repos(org)
+            else
+              @client.org_repos(org)
+            end
 
     repos.reject! do |repo|
       next(true) if repo.archived && !archived_repos
