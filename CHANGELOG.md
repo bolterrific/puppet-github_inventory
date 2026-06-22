@@ -9,14 +9,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+* Added support for all sorts of OSes
+  - (Basically: if you can install the (Open)Bolt AIO and the octokit gem, this
+    inventory plugin should work)
 * New task `github_inventory::headmost_tag_for_branch` to find the `HEAD`-most
   tag along a particular GitHub repo branch
-* Added support for all sorts of OSes
-  - (Basically, if you can install Bolt and the octokit gem, this inventory
-    plugin should work)
-
+* New parameters in plan `github_inventory::update_forked_mirrors`:
+  - `$clone_repos_collision_strategy`
+  - `$clone_protocol`
 ### Changed
 
+* In plan `github_inventory::update_forked_mirrors`:
+  - Archived repos are no longer skipped (they might legitimately contain
+    updates), but emit a warning and are marked in the final report
+  - The final report is now displayed as a GFM-compatible markdown table
+  - The git cloning strategy now defaults to `skip` (change with
+`github_inventory::update_forked_mirrors::$clone_repos_collision_strategy`)
 
 ### Fixed
 

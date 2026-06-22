@@ -311,7 +311,7 @@ Update default branches & tags on forked GitHub repos
 For each target repo (provided by `github_inventory` plugin):
   * Clone repo
   * (Optional) skip if repo is not a Puppet module for desired `forge_org`
-  * Add parent repo as remote, fetchparent's default branch and tags
+  * Add parent repo as remote, fetch parent's default branch and tags
   * (Optional) skip if `noop` or repo is in `noop_repos`
   * Push parent's default branch to repo (and push tags on branch)
   * Ensure repo's default branch matches parent's default branch
@@ -324,12 +324,14 @@ Target repos can be fine-tuned in the inventory by using the
 The following parameters are available in the `github_inventory::update_forked_mirrors` plan:
 
 * [`targets`](#-github_inventory--update_forked_mirrors--targets)
+* [`github_api_token`](#-github_inventory--update_forked_mirrors--github_api_token)
+* [`forge_org`](#-github_inventory--update_forked_mirrors--forge_org)
+* [`clone_repos`](#-github_inventory--update_forked_mirrors--clone_repos)
 * [`target_dir`](#-github_inventory--update_forked_mirrors--target_dir)
+* [`clone_repos_collision_strategy`](#-github_inventory--update_forked_mirrors--clone_repos_collision_strategy)
+* [`clone_protocol`](#-github_inventory--update_forked_mirrors--clone_protocol)
 * [`noop`](#-github_inventory--update_forked_mirrors--noop)
 * [`noop_repos`](#-github_inventory--update_forked_mirrors--noop_repos)
-* [`github_api_token`](#-github_inventory--update_forked_mirrors--github_api_token)
-* [`clone_repos`](#-github_inventory--update_forked_mirrors--clone_repos)
-* [`forge_org`](#-github_inventory--update_forked_mirrors--forge_org)
 
 ##### <a name="-github_inventory--update_forked_mirrors--targets"></a>`targets`
 
@@ -339,6 +341,32 @@ Name of `github_inventory` Targets (or inventory group)
 
 Default value: `'github_repos'`
 
+##### <a name="-github_inventory--update_forked_mirrors--github_api_token"></a>`github_api_token`
+
+Data type: `Sensitive[String[1]]`
+
+GitHub API token.
+
+Default value: `Sensitive.new(system::env('GITHUB_API_TOKEN'))`
+
+##### <a name="-github_inventory--update_forked_mirrors--forge_org"></a>`forge_org`
+
+Data type: `Variant[String[1],Boolean[false]]`
+
+Forge org name, required in module's metadata.json
+Set to `false` to process all module repos, regardless of forge org
+
+Default value: `'puppetlabs'`
+
+##### <a name="-github_inventory--update_forked_mirrors--clone_repos"></a>`clone_repos`
+
+Data type: `Boolean`
+
+When true, clones repos locally.
+Set to false if local clones already exist with staged changes.
+
+Default value: `true`
+
 ##### <a name="-github_inventory--update_forked_mirrors--target_dir"></a>`target_dir`
 
 Data type: `Stdlib::Absolutepath`
@@ -346,6 +374,22 @@ Data type: `Stdlib::Absolutepath`
 Local directory to clone repos into (when clone_repos = true)
 
 Default value: `"${system::env('PWD')}/_repos"`
+
+##### <a name="-github_inventory--update_forked_mirrors--clone_repos_collision_strategy"></a>`clone_repos_collision_strategy`
+
+Data type: `Enum[fail,skip,overwrite,fetch]`
+
+Action to take when a local repo directory already exists
+
+Default value: `'skip'`
+
+##### <a name="-github_inventory--update_forked_mirrors--clone_protocol"></a>`clone_protocol`
+
+Data type: `Enum[http,ssh]`
+
+'http' or 'ssh'
+
+Default value: `'ssh'`
 
 ##### <a name="-github_inventory--update_forked_mirrors--noop"></a>`noop`
 
@@ -363,30 +407,6 @@ Data type: `Array[String,0]`
 List of specific repos to always treat as noop, even when noop=false
 
 Default value: `[]`
-
-##### <a name="-github_inventory--update_forked_mirrors--github_api_token"></a>`github_api_token`
-
-Data type: `Sensitive[String[1]]`
-
-
-
-Default value: `Sensitive.new(system::env('GITHUB_API_TOKEN'))`
-
-##### <a name="-github_inventory--update_forked_mirrors--clone_repos"></a>`clone_repos`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### <a name="-github_inventory--update_forked_mirrors--forge_org"></a>`forge_org`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: `'puppetlabs'`
 
 ### <a name="github_inventory--workflows"></a>`github_inventory::workflows`
 

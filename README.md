@@ -107,7 +107,7 @@ An example `inventory.yaml` file:
 
 ```yaml
 groups:
-  - name: repo_targets
+  - name: github_repos
     targets:
       - _plugin: github_inventory  # <- Plugin provides `local` Targets
         org: bolterrific           # <- GitHub org with Target repos

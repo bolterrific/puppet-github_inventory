@@ -18,6 +18,10 @@
 # @param github_api_token
 #     GitHub API token.
 #
+# @param forge_org
+#    Forge org name, required in module's metadata.json
+#    Set to `false` to process all module repos, regardless of forge org
+#
 # @param clone_repos
 #     When true, clones repos locally.
 #     Set to false if local clones already exist with staged changes.
@@ -25,9 +29,11 @@
 # @param target_dir
 #    Local directory to clone repos into (when clone_repos = true)
 #
-# @param forge_org
-#    Forge org name, required in module's metadata.json
-#    Set to `false` to process all module repos, regardless of forge org
+# @param clone_repos_collision_strategy
+#    Action to take when a local repo directory already exists
+#
+# @param clone_protocol
+#    'http' or 'ssh'
 #
 # @param noop
 #    When true, all repos will run through all prep steps, but not push up
@@ -39,9 +45,11 @@
 plan github_inventory::update_forked_mirrors(
   TargetSpec $targets                    = 'github_repos',
   Sensitive[String[1]] $github_api_token = Sensitive.new(system::env('GITHUB_API_TOKEN')),
+  Variant[String[1],Boolean[false]] $forge_org    = 'puppetlabs',
   Boolean $clone_repos                   = true,
+  Enum[fail,skip,overwrite,fetch] $clone_repos_collision_strategy = 'skip',
+  Enum[http,ssh] $clone_protocol         = 'ssh',
   Stdlib::Absolutepath $target_dir       = "${system::env('PWD')}/_repos",
-  Variant[String[1],false] $forge_org    = 'puppetlabs',
   Boolean $noop                          = true,
   Array[String,0] $noop_repos            = [],
 ){
@@ -60,9 +68,9 @@ plan github_inventory::update_forked_mirrors(
     $clone_results = run_plan('github_inventory::clone_git_repos', {
       'targets'            => $forked_unarchived_github_repos,
       'target_dir'         => $target_dir,
-      'collision_strategy' => 'overwrite',
+      'collision_strategy' => $clone_repos_collision_strategy,
       'return_result'      => true,
-      'clone_protocol'     => 'ssh',
+      'clone_protocol'     => $clone_protocol,
     })
   }
 
@@ -113,7 +121,9 @@ plan github_inventory::update_forked_mirrors(
     if $parent_info['archived'] {
       warning "!!!!!!!!!! Parent repo ARCHIVED: ${parent_info['html_url']}"
       # unless $noop { debug::break() } # TODO log?
-      next(false)
+      $parent_archived = true
+    }  else {
+      $parent_archived = false
     }
 
     # Check out default branch & tags from parent (upstream) repo
@@ -129,7 +139,7 @@ plan github_inventory::update_forked_mirrors(
        git checkout upstream/${pdb}
        git checkout -B ${pdb}
        | GIT_PULL_FROM_UPSTREAM_CMDS
-    $git_pull_result = run_command($git_pull_cmds, 'localhost', {'_catch_errors' => true})
+    $git_pull_result = run_command($git_pull_cmds, 'localhost', {'_catch_errors'                                                                                                           => true})
 
     unless $git_pull_result[0].status == 'success' {
       $msg = [
@@ -140,14 +150,37 @@ plan github_inventory::update_forked_mirrors(
       next( $git_pull_result[0] )
     }
 
-    $status = ($rdb == $pdb) ? { true => 'ok', default => '!!!! DIFFERENT !!!!' }
-    $pull_msg = sprintf("%-35s | origin: %-6s | upstream: %-6s | $status", $repo.name, $rdb, $pdb)
+    $status = [
+      if $parent_archived { ' :skull: parent archived' },
+      unless ($rdb == $pdb) { ' :warning: parent default branch different' },
+    ].flatten.join(' ').strip.then |$x| {
+       if $x.empty { 'ok' } else { $x }
+    }
+
+    $git_tag_delta_result = run_command("cd ${repo_dir.shellquote};  git log --oneline --decorate origin/${rdb}...upstream/${pdb}  --simplify-by-decoration",'localhost', {'_catch_errors' => true})
+    unless $git_tag_delta_result[0].status == 'success' {
+      $msg = [
+        "ERROR: git log --oneline --decorate origin/${rdb}...upstream/${pdb}  --simplify-by-decoration failed for '${repo.name}'",
+        "\n\n${git_pull_result[0].value.to_yaml}\n\n",
+      ].join("\n")
+      warning( $msg )
+      next( $git_tag_delta_result[0] )
+    }
+
+    $git_tags_delta = $git_tag_delta_result.first.value.dig('stdout').split("\n").filter |$x| { $x =~ /tag: / }.map |$x| { $x.match( /\(tag: ([^)]+)\)/ ).dig(1)  }.flatten
+
+    $pull_msg = sprintf("| %-39s | origin: %-6s | upstream: %-6s | new tags: %-3s | $status |", $repo.name, $rdb, $pdb, $git_tags_delta.size)
     out::message($pull_msg)
+
     $result_data = {
       'default_branch'        => $rdb,
       'parent_default_branch' => $pdb,
-      'pull_msg'              =>  $pull_msg,
+      'pull_msg'              => $pull_msg,
+      'git_tags_delta'        => $git_tags_delta,
+      'parent_archived'       => $parent_archived,
     }
+
+
 
     if $repo.name in $noop_repos {
       out::message( "${repo.name}: NOOP REPO; not applying changes" )
@@ -168,14 +201,14 @@ plan github_inventory::update_forked_mirrors(
     $git_push_cmds = @("GIT_PUSH_TO_ORIGIN_CMDS"/L)
        cd ${repo_dir.shellquote}
        git push --follow-tags origin ${pdb}
+       git push --tags origin ${pdb}
        | GIT_PUSH_TO_ORIGIN_CMDS
 
-    $git_push_result = run_command($git_push_cmds, 'localhost', {'_catch_errors' => true})
-
+    $git_push_result = run_command($git_push_cmds, 'localhost', {'_catch_errors'=> true})
     unless $git_push_result[0].status == 'success' {
       $msg = [
         "ERROR: git push --follow-tags origin ${pdb} failed for '${repo.name}'",
-        "\n\n${git_push_result[0].value.to_yaml}\n\n",
+        "\n\n${git_push_result[0].value.stdlib::to_yaml}\n\n",
       ].join("\n")
       warning( $msg )
       next( Result.new( $repo, $git_push_result[0].value + {
@@ -216,8 +249,12 @@ plan github_inventory::update_forked_mirrors(
   out::message( "${fetch_ok_set.count} successesful" )
   ### debug::break()
 
+  out::message( "| mirror/fork | default branch | parent branch | new tags | same default branch? |\n")
+  out::message( "| -------------------------------------- | ----- | ----- |  ----- | ---- |\n")
   $fetch_ok_set.each |$r| { out::message("${r.value['extra']['pull_msg']}") }
+  out::message( "\n\n" )
   out::message( "${fetch_ok_set.filter |$r| { $r.value['extra']['default_branch'] != $r.value['extra']['parent_default_branch'] }.count  } forked mirrors have a different default branch than their parent\n\n" )
+  out::message( "${fetch_ok_set.filter |$r| { $r.value['extra']['parent_archived'] == true }.count  } forked mirrors' parents have been archived\n\n" )
   out::message( "${fetch_error_set.count} errors" )
   out::message( $fetch_error_set.map |$r| { "${r.target.name}:\n${r.value['stderror']}" }.join("\n---------------------------------------------\n") )
   ### debug::break()
